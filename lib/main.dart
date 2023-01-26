@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'component/bottomIconBar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,10 +40,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    var scaffold2 = Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
+      bottomNavigationBar: BottomIconBar(), //UIの確認のため、いづれ消す
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -63,5 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
     );
+    var scaffold = scaffold2;
+    return scaffold;
   }
 }
