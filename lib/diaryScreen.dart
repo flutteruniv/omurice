@@ -35,11 +35,13 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            showDialog<void>(
-                context: context,
-                builder: (_) {
-                  return const AlertDialogSample();
-                });
+            isSaveNeeded
+                ? showDialog<void>(
+                    context: context,
+                    builder: (_) {
+                      return const AlertDialogSample();
+                    })
+                : Navigator.pop(context);
           },
         ),
       ),
