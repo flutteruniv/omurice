@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:omurice/component/diaryFormatItem.dart';
 import 'package:intl/intl.dart';
+import 'package:omurice/diaryScreen.dart';
 
 class DiaryFormatChoiceScreen extends StatefulWidget {
   const DiaryFormatChoiceScreen({Key? key}) : super(key: key);
@@ -24,7 +25,14 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
         children: [
           DiaryFormatItem(
             label: "五感日記",
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => DiaryCreateScreen(),
+                    fullscreenDialog: true,
+                  ));
+            },
           ),
           DiaryFormatItem(
             label: "過去の自分へ",
