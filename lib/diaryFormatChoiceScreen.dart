@@ -12,7 +12,7 @@ class DiaryFormatChoiceScreen extends StatefulWidget {
 }
 
 const String fiveSensesDiaryFormat =
-    "■視覚で感じたこと\n\n\n■聴覚で感じたこと\n\n\n■臭覚で感じたこと\n\n\n■味覚で感じたこと\n\n\n■触覚で感じたこと\n\n";
+    "■視覚で感じたこと\n\n\n■聴覚で感じたこと\n\n\n■嗅覚で感じたこと\n\n\n■味覚で感じたこと\n\n\n■触覚で感じたこと\n\n";
 const String myPastSelfFormat = "■どの過去の自分に向けて書きたいか\n\n\n■今の自分はどのような感じか\n\n";
 const String becomeYourFutureSelfFormat =
     "■未来ではどんな自分になっているか\n\n\n■未来の自分が今の自分にどのように声をかけたいか\n\n";
