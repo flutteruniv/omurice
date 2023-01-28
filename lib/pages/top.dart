@@ -16,16 +16,16 @@ class Top extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 80,
             ),
-            Center(
+            const Center(
                 child: Text('むねをはって',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
                     ))),
-            Center(
+            const Center(
                 child: Text('いきよう',
                     style: TextStyle(
                       color: Colors.white,
@@ -35,7 +35,7 @@ class Top extends StatelessWidget {
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.black12),
                 onPressed: () {},
-                child: Text("日記を書く",
+                child: const Text("日記を書く",
                     style: TextStyle(
                       color: Colors.white,
                     ))),
@@ -43,7 +43,7 @@ class Top extends StatelessWidget {
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.black12),
                 onPressed: () {},
-                child: Text("ほかの人の日記を見る",
+                child: const Text("ほかの人の日記を見る",
                     style: TextStyle(
                       color: Colors.white,
                     ))),
@@ -51,7 +51,7 @@ class Top extends StatelessWidget {
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.black12),
                 onPressed: () {},
-                child: Text("支援制度・サービスを探す",
+                child: const Text("支援制度・サービスを探す",
                     style: TextStyle(
                       color: Colors.white,
                     )))
