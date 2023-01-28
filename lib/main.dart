@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'component/bottomIconBar.dart';
+import 'package:omurice/pages/top.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,8 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      bottomNavigationBar: BottomIconBar(), //UIの確認のため、いづれ消す
-      body: Center(),
+      body: Top(),
     );
   }
 }
