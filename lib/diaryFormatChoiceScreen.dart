@@ -25,14 +25,7 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
         children: [
           DiaryFormatItem(
             label: "五感日記",
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => DiaryCreateScreen(),
-                    fullscreenDialog: true,
-                  ));
-            },
+            onPressed: () {},
           ),
           DiaryFormatItem(
             label: "過去の自分へ",
@@ -48,7 +41,15 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
           ),
           DiaryFormatItem(
             label: "自由に",
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const DiaryCreateScreen(),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
           ),
         ],
       ),
