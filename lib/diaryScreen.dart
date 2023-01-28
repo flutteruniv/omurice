@@ -4,14 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DiaryCreateScreen extends StatefulWidget {
-  const DiaryCreateScreen({Key? key}) : super(key: key);
+  const DiaryCreateScreen({
+    Key? key,
+    required this.format,
+  }) : super(key: key);
+
+  final String format;
 
   @override
   State<DiaryCreateScreen> createState() => _DiaryCreateScreenState();
 }
 
 class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
+  TextEditingController? _controller;
   bool isSaveNeeded = false;
+
+  @override
+  void initState() {
+    _controller = TextEditingController(text: widget.format);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +55,7 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Expanded(
                       child: TextField(
+                        controller: _controller,
                         style: const TextStyle(
                           fontSize: 24,
                         ),
