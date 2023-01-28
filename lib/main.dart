@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:omurice/pages/top.dart';
-import 'component/bottomIconBar.dart';
 
 void main() {
   runApp(const MyApp());
