@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:omurice/pages/top.dart';
+=======
+import 'package:omurice/diaryFormatChoiceScreen.dart';
+import 'component/bottomIconBar.dart';
+import 'pages/top.dart';
+import 'sampleScreen.dart';
+>>>>>>> 9d946a9b6f50e555e1218d717578dfd3f8515654
 
 void main() {
   runApp(const MyApp());
