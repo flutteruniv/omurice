@@ -46,7 +46,7 @@ class Top extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (_) => const NavHost(
                     title: "",
-                    selectedIndex: 1,
+                    selectedIndex: 0,
                   ),
                 ),
               );
@@ -66,7 +66,7 @@ class Top extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (_) => const NavHost(
                     title: "",
-                    selectedIndex: 0,
+                    selectedIndex: 1,
                   ),
                 ),
               );
