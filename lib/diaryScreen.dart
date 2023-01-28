@@ -52,7 +52,9 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         onChanged: (value) {
-                          isSaveNeeded = value.isNotEmpty;
+                          setState(() {
+                            isSaveNeeded = value.isNotEmpty;
+                          });
                         },
                       ),
                     ),
@@ -64,47 +66,51 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
                 height: 2,
                 color: Colors.black,
               ),
-              SizedBox(
-                width: double.infinity,
-                height: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: 150,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black12),
-                        onPressed: () {},
-                        child: const Text(
-                          "保存",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+              isSaveNeeded
+                  ? SizedBox(
+                      width: double.infinity,
+                      height: 100,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: 150,
+                            height: 50,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black12),
+                              onPressed: () {},
+                              child: const Text(
+                                "保存",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 150,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black12),
-                        onPressed: () {},
-                        child: const Text(
-                          "投稿",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                          SizedBox(
+                            width: 150,
+                            height: 50,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black12),
+                              onPressed: () {},
+                              child: const Text(
+                                "投稿",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
+                    )
+                  : const SizedBox(
+                      height: 1,
                     ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
