@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:omurice/diaryFormatChoiceScreen.dart';
+import 'package:omurice/diaryView.dart';
 import 'component/bottomIconBar.dart';
 import 'sampleScreen.dart';
 
@@ -20,7 +21,7 @@ class NavHost extends StatefulWidget {
 class _NavHostState extends State<NavHost> {
   List<Widget> display = [
     const DiaryFormatChoiceScreen(),
-    const Sample(label: "「日記を見る」ページ"),
+    const DiaryView(),
     const Sample(label: "サービス・支援ページ"),
     const Sample(label: "ユーザーページ")
   ];
@@ -86,6 +87,6 @@ class _NavHostState extends State<NavHost> {
   }
 
   bool isAppBarShowed(int selectedIndex) {
-    return selectedIndex != 0;
+    return selectedIndex > 1;
   }
 }
