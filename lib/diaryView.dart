@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/component/serchWidget.dart';
+import 'package:omurice/component/searchWidget.dart';
 import 'package:omurice/diaryList.dart';
 
 class DiaryView extends StatelessWidget {
