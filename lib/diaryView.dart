@@ -16,6 +16,7 @@ class DiaryView extends StatelessWidget {
           onTap: focusNode.requestFocus,
           child: Scaffold(
             appBar: AppBar(
+              elevation: 4,
               backgroundColor: Colors.white,
               automaticallyImplyLeading: false,
               flexibleSpace: const Center(
@@ -27,10 +28,14 @@ class DiaryView extends StatelessWidget {
                 ),
               ),
               bottom: TabBar(
+                labelColor: Colors.black,
+                labelStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
                 onTap: (value) => {
                   focusNode.requestFocus(),
                 },
-                labelColor: Colors.black,
                 tabs: const [
                   Tab(text: "自分"),
                   Tab(text: "フォロー"),
