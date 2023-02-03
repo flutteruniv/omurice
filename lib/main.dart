@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/component/serchWidget.dart';
 import 'package:omurice/pages/top.dart';
 
 void main() {
@@ -39,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: SearchWidget(),
+      body: Top(),
     );
   }
 }
