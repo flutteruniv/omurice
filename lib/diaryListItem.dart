@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:omurice/diaryList.dart';
 
 class DiaryListItem extends StatelessWidget {
   const DiaryListItem({
     Key? key,
     required this.userName,
     this.avatarUrl,
+    required this.diaryKind,
     required this.diaryText,
     required this.isBookmarked,
     required this.onTapBookmark,
@@ -12,6 +14,7 @@ class DiaryListItem extends StatelessWidget {
 
   final String userName;
   final String? avatarUrl;
+  final DiaryKind diaryKind;
   final String diaryText;
   final bool isBookmarked;
   final VoidCallback onTapBookmark;
@@ -66,15 +69,60 @@ class DiaryListItem extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(10),
-            child: IconButton(
-              icon: Icon(
-                isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-              ),
-              onPressed: onTapBookmark,
+            child: Column(
+              children: [
+                getChip(diaryKind),
+                IconButton(
+                  icon: Icon(
+                    isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                  ),
+                  onPressed: onTapBookmark,
+                ),
+              ],
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+Widget getChip(DiaryKind kind) {
+  switch (kind) {
+    case DiaryKind.fiveSenses:
+      {
+        return Chip(
+          label: const Text("五感"),
+          backgroundColor: Colors.red[100],
+        );
+      }
+    case DiaryKind.myPastSelf:
+      {
+        return Chip(
+          label: const Text("過去"),
+          backgroundColor: Colors.blue[100],
+        );
+      }
+    case DiaryKind.becomeYourFutureSelf:
+      {
+        return Chip(
+          label: const Text("未来"),
+          backgroundColor: Colors.amber[100],
+        );
+      }
+    case DiaryKind.serviceUsed:
+      {
+        return Chip(
+          label: const Text("経験"),
+          backgroundColor: Colors.purple[100],
+        );
+      }
+    case DiaryKind.free:
+      {
+        return Chip(
+          label: const Text("自由"),
+          backgroundColor: Colors.green[100],
+        );
+      }
   }
 }
