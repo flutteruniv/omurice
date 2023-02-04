@@ -14,6 +14,7 @@ class DiaryList extends StatelessWidget {
         return DiaryListItem(
           userName: dummyDiaryDataList[index].userName,
           avatarUrl: dummyDiaryDataList[index].avatarUrl,
+          diaryKind: dummyDiaryDataList[index].diaryKind,
           diaryText: dummyDiaryDataList[index].diaryText,
           isBookmarked: dummyDiaryDataList[index].isBookmarked,
           onTapBookmark: () {},
