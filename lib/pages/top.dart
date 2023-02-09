@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/pages/navHost.dart';
+import 'package:omurice/pages/nav_host.dart';
 
 class Top extends StatelessWidget {
   const Top({

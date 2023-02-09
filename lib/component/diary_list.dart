@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/component/diaryListItem.dart';
+import 'package:omurice/component/diary_list_item.dart';
 
 class DiaryList extends StatelessWidget {
   const DiaryList({Key? key, required this.mode}) : super(key: key);
