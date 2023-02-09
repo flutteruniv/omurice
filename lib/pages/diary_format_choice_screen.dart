@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/component/diaryFormatItem.dart';
+import 'package:omurice/component/diary_format_item.dart';
 import 'package:intl/intl.dart';
-import 'package:omurice/pages/diaryScreen.dart';
+import 'package:omurice/pages/diary_screen.dart';
 
 class DiaryFormatChoiceScreen extends StatefulWidget {
   const DiaryFormatChoiceScreen({Key? key}) : super(key: key);

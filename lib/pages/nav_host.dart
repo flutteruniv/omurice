@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/pages/diaryFormatChoiceScreen.dart';
-import 'package:omurice/pages/diaryView.dart';
-import '../component/bottomIconBar.dart';
-import 'sampleScreen.dart';
+import 'package:omurice/pages/diary_format_choice_screen.dart';
+import 'package:omurice/pages/diary_view.dart';
+import '../component/bottom_icon_bar.dart';
+import 'sample_screen.dart';
 
 class NavHost extends StatefulWidget {
   const NavHost({
