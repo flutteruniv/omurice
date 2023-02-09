@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/component/diary_format_Item.dart';
+import 'package:omurice/component/diary_format_item.dart';
 import 'package:intl/intl.dart';
 import 'package:omurice/pages/diary_screen.dart';
 
