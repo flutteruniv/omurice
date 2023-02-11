@@ -90,7 +90,3 @@ List<DiaryData> makeDummyList() {
 
 const dummyAvatarUrl =
     "https://1.bp.blogspot.com/-pzkUACogq0E/X5OcHr5ZnSI/AAAAAAABb5Q/xb-j2PQXgu03_vypUL1XNOYv4bhpWEFgQCNcBGAsYHQ/s180-c/bird_mameruriha_inko_blue.png";
-
-
-
-
