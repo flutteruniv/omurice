@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:omurice/pages/diary_format_choice_screen.dart';
-import 'package:omurice/pages/diary_view.dart';
+import 'package:omurice/pages/diary_view_screen.dart';
+import 'package:omurice/pages/service_list_screen.dart';
+import 'package:omurice/pages/user_info_screen.dart';
 import '../component/bottom_icon_bar.dart';
-import 'sample_screen.dart';
 
 class NavHost extends StatefulWidget {
   const NavHost({
@@ -21,9 +22,9 @@ class NavHost extends StatefulWidget {
 class _NavHostState extends State<NavHost> {
   List<Widget> display = [
     const DiaryFormatChoiceScreen(),
-    const DiaryView(),
-    const Sample(label: "サービス・支援ページ"),
-    const Sample(label: "ユーザーページ")
+    const DiaryViewScreen(),
+    const ServiceListScreen(label: "サービス・支援ページ"),
+    const UserInfoScreen(label: "ユーザーページ")
   ];
   int selectedIndex = 0;
 
@@ -81,7 +82,7 @@ class _NavHostState extends State<NavHost> {
             isFocused: selectedIndex == 3,
           ),
         ],
-      ), //UIの確認のため、いづれ消す
+      ), // TODO:UIの確認のため、いづれ消す
       body: display[selectedIndex],
     );
   }

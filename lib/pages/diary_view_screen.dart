@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:omurice/component/diary_list.dart';
 import 'package:omurice/component/search_widget.dart';
 
-class DiaryView extends StatelessWidget {
-  const DiaryView({Key? key}) : super(key: key);
+class DiaryViewScreen extends StatelessWidget {
+  const DiaryViewScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

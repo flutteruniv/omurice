@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/pages/top.dart';
+import 'package:omurice/pages/top_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Top(),
+      body: TopScreen(),
     );
   }
 }

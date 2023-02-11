@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:omurice/pages/nav_host.dart';
 
-class Top extends StatelessWidget {
-  const Top({
+class TopScreen extends StatelessWidget {
+  const TopScreen({
     Key? key,
   }) : super(key: key);
 
