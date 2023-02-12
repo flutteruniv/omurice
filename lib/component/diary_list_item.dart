@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/component/diary_list.dart';
+import '../model/diary_data_model.dart';
 
 class DiaryListItem extends StatelessWidget {
   const DiaryListItem({

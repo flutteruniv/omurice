@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:omurice/component/diary_list_item.dart';
+import '../model/diary_data_model.dart';
 
 class DiaryList extends StatelessWidget {
   const DiaryList({Key? key, required this.mode}) : super(key: key);
@@ -89,26 +90,3 @@ List<DiaryData> makeDummyList() {
 
 const dummyAvatarUrl =
     "https://1.bp.blogspot.com/-pzkUACogq0E/X5OcHr5ZnSI/AAAAAAABb5Q/xb-j2PQXgu03_vypUL1XNOYv4bhpWEFgQCNcBGAsYHQ/s180-c/bird_mameruriha_inko_blue.png";
-
-class DiaryData {
-  const DiaryData({
-    required this.userName,
-    this.avatarUrl,
-    required this.diaryKind,
-    required this.diaryText,
-    required this.isBookmarked,
-  });
-  final String userName;
-  final String? avatarUrl;
-  final DiaryKind diaryKind;
-  final String diaryText;
-  final bool isBookmarked;
-}
-
-enum DiaryKind {
-  fiveSenses,
-  myPastSelf,
-  becomeYourFutureSelf,
-  serviceUsed,
-  free,
-}

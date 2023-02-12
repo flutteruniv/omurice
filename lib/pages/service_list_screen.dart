@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Sample extends StatelessWidget {
-  const Sample({Key? key, required this.label}) : super(key: key);
+class ServiceListScreen extends StatelessWidget {
+  const ServiceListScreen({Key? key, required this.label}) : super(key: key);
   final String label;
 
   @override
