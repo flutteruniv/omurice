@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:omurice/pages/diary_format_choice_screen.dart';
 import 'package:omurice/pages/diary_view_screen.dart';
 import 'package:omurice/pages/service_list_screen.dart';
-import 'package:omurice/pages/user_info_screen.dart';
+import 'package:omurice/pages/user_profile_screen.dart';
 import '../component/bottom_icon_bar.dart';
 
 class NavHost extends StatefulWidget {
@@ -24,7 +24,7 @@ class _NavHostState extends State<NavHost> {
     const DiaryFormatChoiceScreen(),
     const DiaryViewScreen(),
     const ServiceListScreen(label: "サービス・支援ページ"),
-    const UserInfoScreen(label: "ユーザーページ")
+    const UserProfileScreen()
   ];
   int selectedIndex = 0;
 
