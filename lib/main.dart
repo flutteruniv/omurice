@@ -65,9 +65,86 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _user == null
-        ? MyHomePage(title: "未ログイン")
-        : MyHomePage(title: "ログイン済");
+    return _user == null ? StartPage() : MyHomePage(title: "ログイン済");
+  }
+}
+
+class StartPage extends StatefulWidget {
+  const StartPage({super.key});
+  @override
+  State<StartPage> createState() => _StartPageState();
+}
+
+class _StartPageState extends State<StartPage> {
+  final SupabaseClient supabase = Supabase.instance.client;
+  bool _signInLoading = false;
+  bool _signUpLoading = false;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Image.network(
+                      "https://seeklogo.com/images/S/supabase-logo-DCC676FFE2-seeklogo.com.png",
+                      height: 150.0),
+                  const SizedBox(height: 25),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Field is required';
+                      }
+                      return null;
+                    },
+                    controller: _emailController,
+                    decoration: const InputDecoration(label: Text("Email")),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Field is required';
+                      }
+                      return null;
+                    },
+                    controller: _emailController,
+                    decoration: const InputDecoration(label: Text("Password")),
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 25),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text("Sign In"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text("Sign Up"),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
