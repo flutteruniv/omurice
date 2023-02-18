@@ -125,17 +125,27 @@ class _StartPageState extends State<StartPage> {
                       }
                       return null;
                     },
-                    controller: _emailController,
+                    controller: _passwordController,
                     decoration: const InputDecoration(label: Text("Password")),
                     obscureText: true,
                   ),
                   const SizedBox(height: 25),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // todo page 19 code
+                    },
                     child: Text("Sign In"),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      // todo page 18 code
+                      final AuthResponse res = await supabase.auth.signUp(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      );
+                      final Session? session = res.session;
+                      final User? user = res.user;
+                    },
                     child: Text("Sign Up"),
                   ),
                 ],
