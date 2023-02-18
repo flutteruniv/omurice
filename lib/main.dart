@@ -224,13 +224,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final SupabaseClient supabase = Supabase.instance.client;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              supabase.auth.signOut();
+            },
+            icon: const Icon(Icons.logout),
+          )
+        ],
       ),
-      body: TopScreen(),
+      body: const TopScreen(),
     );
   }
 }
