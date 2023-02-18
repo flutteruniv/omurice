@@ -130,24 +130,80 @@ class _StartPageState extends State<StartPage> {
                     obscureText: true,
                   ),
                   const SizedBox(height: 25),
-                  ElevatedButton(
-                    onPressed: () {
-                      // todo page 19 code
-                    },
-                    child: Text("Sign In"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      // todo page 18 code
-                      final AuthResponse res = await supabase.auth.signUp(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                      );
-                      final Session? session = res.session;
-                      final User? user = res.user;
-                    },
-                    child: Text("Sign Up"),
-                  ),
+                  _signInLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ElevatedButton(
+                          onPressed: () async {
+                            final isValid = _formKey.currentState?.validate();
+                            if (isValid != true) {
+                              return;
+                            }
+                            setState(() {
+                              _signInLoading = true;
+                            });
+                            try {
+                              await supabase.auth.signInWithPassword(
+                                  email: _emailController.text,
+                                  password: _passwordController.text);
+                            } catch (e) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("Sign in Failed"),
+                                backgroundColor: Colors.redAccent,
+                              ));
+                              setState(() {
+                                _signInLoading = false;
+                              });
+                            }
+                          },
+                          child: const Text("Sign In"),
+                        ),
+                  _signUpLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : OutlinedButton(
+                          onPressed: () async {
+                            final isValid = _formKey.currentState?.validate();
+                            if (isValid != true) {
+                              return;
+                            }
+                            setState(() {
+                              _signUpLoading = true;
+                            });
+                            try {
+                              await supabase.auth.signUp(
+                                  email: _emailController.text,
+                                  password: _passwordController.text);
+                              if (!mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text("Success ! Confirmation email sent"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                              setState(() {
+                                _signUpLoading = false;
+                              });
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Sign up Failed"),
+                                  backgroundColor: Colors.redAccent,
+                                ),
+                              );
+                              setState(
+                                () {
+                                  _signUpLoading = false;
+                                },
+                              );
+                            }
+                          },
+                          child: const Text("Sign up"),
+                        )
                 ],
               ),
             ),
