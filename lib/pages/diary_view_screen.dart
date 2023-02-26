@@ -21,7 +21,7 @@ class DiaryViewScreen extends StatelessWidget {
               automaticallyImplyLeading: false,
               flexibleSpace: const Center(
                 child: Padding(
-                  padding: EdgeInsets.all(24),
+                  padding: EdgeInsets.fromLTRB(20, 0, 20, 30),
                   child: SearchWidget(
                     hint: "キーワードで検索",
                   ),
