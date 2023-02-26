@@ -66,12 +66,6 @@ class UserProfileScreen extends StatelessWidget {
                       Text(
                           "これは自己紹介文ですこれは自己紹介文ですこれは自己紹介文ですこれは自己紹介文ですこれは自己紹介文ですこれは自己紹介文です"),
                       SizedBox(height: deviceHeight * 0.03),
-                      userProfileHeadline("次に目指すフェーズ"),
-                      Chip(
-                        label: const Text("安心"),
-                        backgroundColor: Colors.blue[100],
-                      ),
-                      SizedBox(height: deviceHeight * 0.03),
                       userProfileHeadline("基礎情報"),
                       UserBasicInfoListWidget(),
                     ],
