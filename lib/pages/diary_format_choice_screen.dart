@@ -56,16 +56,16 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
                 },
               ),
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(width: 50),
                 Text("特別な日記"),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             TextButton(
-              child: const Text(
+              child: Text(
                 "五感日記",
                 style: TextStyle(
                   fontSize: 18,
@@ -85,9 +85,9 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
                 );
               },
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             TextButton(
-              child: const Text(
+              child: Text(
                 "過去の自分へ",
                 style: TextStyle(
                   fontSize: 18,
@@ -107,9 +107,9 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
                 );
               },
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             TextButton(
-              child: const Text(
+              child: Text(
                 "未来の自分になりきって",
                 style: TextStyle(
                   fontSize: 18,
@@ -129,9 +129,9 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
                 );
               },
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             TextButton(
-              child: const Text(
+              child: Text(
                 "使ったサービス",
                 style: TextStyle(
                   fontSize: 18,
