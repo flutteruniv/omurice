@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../pages/service_introduce_screen.dart';
+
 class ServiceListItem extends StatelessWidget {
   const ServiceListItem({
     Key? key,
-    // required this.id,
+    required this.id,
     // required this.created_at,
     required this.name,
     // required this.url,
@@ -21,7 +23,7 @@ class ServiceListItem extends StatelessWidget {
     // required this.can_entry,
   }) : super(key: key);
 
-  // final int id;
+  final int id;
   // final created_at;
   final String name;
   // final String url;
@@ -40,32 +42,43 @@ class ServiceListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-        child: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(name),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                width: 100,
-                child: Image.network(thumbnail_url),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("説明"),
-              )
-            ],
-          )
-        ]),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ServiceIntroduceScreen(
+                    id: id,
+                  )),
+        );
+      },
+      child: SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(name),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                  width: 100,
+                  child: Image.network(thumbnail_url),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("説明"),
+                )
+              ],
+            )
+          ]),
+        ),
       ),
     );
   }
