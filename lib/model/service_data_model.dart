@@ -1,6 +1,6 @@
 class ServiceData {
   const ServiceData({
-    // required this.id,
+    required this.id,
     // required this.created_at,
     required this.name,
     // required this.url,
@@ -17,7 +17,7 @@ class ServiceData {
     // required this.income_limit,
     // required this.can_entry,
   });
-  // final Int8 id;
+  final int id;
   // final created_at;
   final String name;
   // final String url;

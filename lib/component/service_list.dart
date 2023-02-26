@@ -13,6 +13,7 @@ class ServiceList extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       itemBuilder: (context, index) {
         return ServiceListItem(
+          id: dummyServiceDataList[index].id,
           name: dummyServiceDataList[index].name,
           thumbnail_url: dummyServiceDataList[index].thumbnail_url,
         );
@@ -36,7 +37,8 @@ enum Mode {
 List<ServiceData> dummyServiceDataList = makeDummyList();
 const dummyServiceDataListBase = [
   ServiceData(
-      name: 'LITALICO',
+      id: 0,
+      name: 'グループホーム',
       thumbnail_url:
           'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
 ];
