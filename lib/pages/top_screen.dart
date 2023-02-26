@@ -48,6 +48,7 @@ class TopScreen extends StatelessWidget {
           child: const Text(
             "日記を書く",
             style: TextStyle(
+              color: Colors.black87,
               decoration: TextDecoration.underline,
               decorationColor: Color.fromRGBO(124, 230, 205, 1),
             ),
@@ -68,6 +69,7 @@ class TopScreen extends StatelessWidget {
           child: const Text(
             "ほかの人の日記を見る",
             style: TextStyle(
+              color: Colors.black87,
               decoration: TextDecoration.underline,
               decorationColor: Color.fromRGBO(124, 230, 205, 1),
             ),
@@ -88,6 +90,7 @@ class TopScreen extends StatelessWidget {
           child: const Text(
             "支援制度・サービスを探す",
             style: TextStyle(
+              color: Colors.black87,
               decoration: TextDecoration.underline,
               decorationColor: Color.fromRGBO(124, 230, 205, 1),
             ),
