@@ -42,7 +42,7 @@ class ServiceListScreen extends StatelessWidget {
                   Tab(text: "お金"),
                   Tab(text: "仕事"),
                   Tab(text: "生活"),
-                  Tab(text: "相談"),
+                  Tab(text: "健康"),
                 ],
               ),
             ),
