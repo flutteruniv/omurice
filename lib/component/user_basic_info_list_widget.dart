@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/component/user_profile_headline.dart';
 
 class UserBasicInfoListWidget extends StatelessWidget {
   const UserBasicInfoListWidget({
