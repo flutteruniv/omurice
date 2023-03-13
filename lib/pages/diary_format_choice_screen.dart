@@ -27,74 +27,133 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: [
-          DiaryFormatItem(
-            label: "五感日記",
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) =>
-                      const DiaryCreateScreen(format: fiveSensesDiaryFormat),
-                  fullscreenDialog: true,
+      body: Center(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 150, 20, 150),
+              child: TextButton.icon(
+                icon: const Icon(
+                  Icons.mode_edit,
+                  color: Color.fromRGBO(124, 230, 205, 1),
                 ),
-              );
-            },
-          ),
-          DiaryFormatItem(
-            label: "過去の自分へ",
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) =>
-                      const DiaryCreateScreen(format: myPastSelfFormat),
-                  fullscreenDialog: true,
+                label: const Text(
+                  "日記を書く",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black87,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color.fromRGBO(124, 230, 205, 1),
+                  ),
                 ),
-              );
-            },
-          ),
-          DiaryFormatItem(
-            label: "未来の自分になりきって",
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const DiaryCreateScreen(
-                      format: becomeYourFutureSelfFormat),
-                  fullscreenDialog: true,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const DiaryCreateScreen(format: ""),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 50),
+                Text("特別な日記"),
+              ],
+            ),
+            SizedBox(height: 20),
+            TextButton(
+              child: Text(
+                "五感日記",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black87,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Color.fromRGBO(218, 72, 165, 1),
                 ),
-              );
-            },
-          ),
-          DiaryFormatItem(
-            label: "使ったサービス",
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) =>
-                      const DiaryCreateScreen(format: servicesUsedFormat),
-                  fullscreenDialog: true,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        const DiaryCreateScreen(format: fiveSensesDiaryFormat),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            TextButton(
+              child: Text(
+                "過去の自分へ",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black87,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Color.fromRGBO(218, 72, 165, 1),
                 ),
-              );
-            },
-          ),
-          DiaryFormatItem(
-            label: "自由に",
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const DiaryCreateScreen(format: ""),
-                  fullscreenDialog: true,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        const DiaryCreateScreen(format: myPastSelfFormat),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            TextButton(
+              child: Text(
+                "未来の自分になりきって",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black87,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Color.fromRGBO(218, 72, 165, 1),
                 ),
-              );
-            },
-          ),
-        ],
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const DiaryCreateScreen(
+                        format: becomeYourFutureSelfFormat),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            TextButton(
+              child: Text(
+                "使ったサービス",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black87,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Color.fromRGBO(218, 72, 165, 1),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        const DiaryCreateScreen(format: servicesUsedFormat),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

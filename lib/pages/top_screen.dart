@@ -8,98 +8,95 @@ class TopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage('images/top-background.jpg'),
-        fit: BoxFit.cover,
-      )),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const SizedBox(
-            height: 80,
-          ),
-          const Center(
-            child: Text(
-              'むねをはって',
-              style: TextStyle(
-                color: Colors.white,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Container(width: 100, child: Image.asset('images/icon.png')),
+        ),
+        const Center(
+          child: Text(
+            'むねをはって',
+            style: TextStyle(
+                color: Color.fromRGBO(124, 230, 205, 1),
                 fontSize: 30,
-              ),
-            ),
+                fontWeight: FontWeight.bold),
           ),
-          const Center(
-            child: Text(
-              'いきよう',
-              style: TextStyle(
-                color: Colors.white,
+        ),
+        const Center(
+          child: Text(
+            'いきよう',
+            style: TextStyle(
+                color: Color.fromRGBO(124, 230, 205, 1),
                 fontSize: 30,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const NavHost(
+                  title: "",
+                  selectedIndex: 0,
+                ),
               ),
+            );
+          },
+          child: const Text(
+            "日記を書く",
+            style: TextStyle(
+              color: Colors.black87,
+              decoration: TextDecoration.underline,
+              decorationColor: Color.fromRGBO(124, 230, 205, 1),
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.black12),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const NavHost(
-                    title: "",
-                    selectedIndex: 0,
-                  ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const NavHost(
+                  title: "",
+                  selectedIndex: 1,
                 ),
-              );
-            },
-            child: const Text(
-              "日記を書く",
-              style: TextStyle(
-                color: Colors.white,
               ),
+            );
+          },
+          child: const Text(
+            "ほかの人の日記を見る",
+            style: TextStyle(
+              color: Colors.black87,
+              decoration: TextDecoration.underline,
+              decorationColor: Color.fromRGBO(124, 230, 205, 1),
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.black12),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const NavHost(
-                    title: "",
-                    selectedIndex: 1,
-                  ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const NavHost(
+                  title: "",
+                  selectedIndex: 2,
                 ),
-              );
-            },
-            child: const Text(
-              "ほかの人の日記を見る",
-              style: TextStyle(
-                color: Colors.white,
               ),
+            );
+          },
+          child: const Text(
+            "支援制度・サービスを探す",
+            style: TextStyle(
+              color: Colors.black87,
+              decoration: TextDecoration.underline,
+              decorationColor: Color.fromRGBO(124, 230, 205, 1),
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.black12),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const NavHost(
-                    title: "",
-                    selectedIndex: 2,
-                  ),
-                ),
-              );
-            },
-            child: const Text(
-              "支援制度・サービスを探す",
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 }
