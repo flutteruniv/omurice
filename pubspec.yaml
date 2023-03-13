@@ -37,6 +37,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   intl: ^0.18.0
+  flutter_native_splash: ^2.2.18
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +56,19 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+
+flutter_native_splash:
+  color: '#F7DC69'
+  image: 'images/logo.png'
+  color_dark: '#F7DC69'
+  image_dark: 'images/logo.png'
+  fullscreen: true
+  android_12:
+    icon_background_color: '#F7DC69'
+    image: 'images/logo.png'
+    icon_background_color_dark: '#F7DC69'
+    image_dark: 'images/logo.png'
+
 flutter:
 
   # The following line ensures that the Material Icons font is
