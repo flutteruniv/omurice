@@ -48,7 +48,10 @@ class ServiceListScreen extends StatelessWidget {
             ),
             body: const TabBarView(
               children: [
-                ServiceList(mode: Mode.myself),
+                ServiceList(categoryId: 1),
+                ServiceList(categoryId: 2),
+                ServiceList(categoryId: 3),
+                ServiceList(categoryId: 4),
               ],
             ),
           ),
