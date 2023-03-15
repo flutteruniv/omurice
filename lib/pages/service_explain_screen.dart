@@ -56,19 +56,23 @@ class ServiceIntroduceScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Center(
                     child: Column(children: [
-                      Text(service_data[index].service_name ?? ''),
-                      service_data[index].service_url != null
-                          ? TextButton(
-                              onPressed: () async {
-                                var url = Uri.parse(
-                                    service_data[index].service_url ?? '');
-                                if (await canLaunchUrl(url)) {
-                                  await launchUrl(url);
-                                } else {
-                                  throw 'Could not launch $url';
-                                }
-                              },
-                              child: const Text("サイト"))
+                      service_data[index].service_url != null &&
+                              service_data[index].service_name != null
+                          ? Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextButton(
+                                  onPressed: () async {
+                                    var url = Uri.parse(
+                                        service_data[index].service_url ?? '');
+                                    if (await canLaunchUrl(url)) {
+                                      await launchUrl(url);
+                                    } else {
+                                      throw 'Could not launch $url';
+                                    }
+                                  },
+                                  child: Text(
+                                      service_data[index].service_name ?? '')),
+                            )
                           : SizedBox()
                     ]),
                   );
