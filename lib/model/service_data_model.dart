@@ -1,12 +1,12 @@
 class ExplainData {
   const ExplainData({
     required this.id,
-    required this.category_id,
-    required this.explain_id,
-    required this.explain_name,
+    required this.categoryId,
+    required this.explainId,
+    required this.explainName,
     required this.explain,
-    required this.explain_url,
-    required this.service_data,
+    required this.explainUrl,
+    required this.serviceData,
     // required this.max_age,
     // required this.min_age,
     // required this.start_date,
@@ -20,12 +20,12 @@ class ExplainData {
   });
 
   final int id;
-  final int category_id;
-  final int explain_id;
-  final String explain_name;
+  final int categoryId;
+  final int explainId;
+  final String explainName;
   final String explain;
-  final String? explain_url;
-  final List<ServiceData> service_data;
+  final String? explainUrl;
+  final List<ServiceData> serviceData;
   // final int max_age;
   // final int min_age;
   // final start_date;
@@ -40,9 +40,9 @@ class ExplainData {
 
 class ServiceData {
   const ServiceData({
-    required this.explain_id,
-    required this.service_name,
-    required this.service_url,
+    required this.explainId,
+    required this.serviceName,
+    required this.serviceUrl,
     // required this.max_age,
     // required this.min_age,
     // required this.start_date,
@@ -54,9 +54,9 @@ class ServiceData {
     // required this.income_limit,
     // required this.can_entry,
   });
-  final int explain_id;
-  final String? service_name;
-  final String? service_url;
+  final int explainId;
+  final String? serviceName;
+  final String? serviceUrl;
   // final int max_age;
   // final int min_age;
   // final start_date;
