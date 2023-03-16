@@ -82,7 +82,7 @@ class _NavHostState extends State<NavHost> {
             isFocused: selectedIndex == 3,
           ),
         ],
-      ), // TODO:UIの確認のため、いづれ消す
+      ),
       body: display[selectedIndex],
     );
   }

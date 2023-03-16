@@ -56,18 +56,18 @@ class UserProfileScreen extends StatelessWidget {
                       SizedBox(height: deviceHeight * 0.03),
                       Row(
                         children: [
-                          Text("フォロー >"),
+                          const Text("フォロー >"),
                           SizedBox(width: deviceWidth * 0.03),
-                          Text("ブックマーク >"),
+                          const Text("ブックマーク >"),
                         ],
                       ),
                       SizedBox(height: deviceHeight * 0.03),
                       userProfileHeadline("自己紹介"),
-                      Text(
+                      const Text(
                           "これは自己紹介文ですこれは自己紹介文ですこれは自己紹介文ですこれは自己紹介文ですこれは自己紹介文ですこれは自己紹介文です"),
                       SizedBox(height: deviceHeight * 0.03),
                       userProfileHeadline("基礎情報"),
-                      UserBasicInfoListWidget(),
+                      const UserBasicInfoListWidget(),
                     ],
                   )),
             ],

@@ -13,7 +13,7 @@ class TopScreen extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(32.0),
-          child: Container(width: 100, child: Image.asset('images/icon.png')),
+          child: SizedBox(width: 100, child: Image.asset('images/icon.png')),
         ),
         const Center(
           child: Text(

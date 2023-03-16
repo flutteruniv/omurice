@@ -66,7 +66,7 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _user == null ? StartPage() : MyHomePage(title: "ログイン済");
+    return _user == null ? const StartPage() : const MyHomePage(title: "ログイン済");
   }
 }
 
@@ -104,9 +104,7 @@ class _StartPageState extends State<StartPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.network(
-                      "https://seeklogo.com/images/S/supabase-logo-DCC676FFE2-seeklogo.com.png",
-                      height: 150.0),
+                  SizedBox(height: 150, child: Image.asset('images/icon.png')),
                   const SizedBox(height: 25),
                   TextFormField(
                     validator: (value) {

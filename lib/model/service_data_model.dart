@@ -1,11 +1,12 @@
-class ServiceData {
-  const ServiceData({
+class ExplainData {
+  const ExplainData({
     required this.id,
-    // required this.created_at,
-    required this.name,
-    // required this.url,
-    required this.thumbnail_url,
-    // required this.category_id,
+    required this.categoryId,
+    required this.explainId,
+    required this.explainName,
+    required this.explain,
+    required this.explainUrl,
+    required this.serviceData,
     // required this.max_age,
     // required this.min_age,
     // required this.start_date,
@@ -17,20 +18,53 @@ class ServiceData {
     // required this.income_limit,
     // required this.can_entry,
   });
+
   final int id;
-  // final created_at;
-  final String name;
-  // final String url;
-  final String thumbnail_url;
-  // final Int8 category_id;
-  // final Int8 max_age;
-  // final Int8 min_age;
+  final int categoryId;
+  final int explainId;
+  final String explainName;
+  final String explain;
+  final String? explainUrl;
+  final List<ServiceData> serviceData;
+  // final int max_age;
+  // final int min_age;
   // final start_date;
   // final end_date;
-  // final Int8 prefecture_id;
-  // final Int8 restriction_id;
-  // final Int8 operator_type_id;
-  // final Int8 occupation_id;
-  // final Int8 income_limit;
+  // final int prefecture_id;
+  // final int restriction_id;
+  // final int operator_type_id;
+  // final int occupation_id;
+  // final int income_limit;
+  // final bool can_entry;
+}
+
+class ServiceData {
+  const ServiceData({
+    required this.explainId,
+    required this.serviceName,
+    required this.serviceUrl,
+    // required this.max_age,
+    // required this.min_age,
+    // required this.start_date,
+    // required this.end_date,
+    // required this.prefecture_id,
+    // required this.restriction_id,
+    // required this.operator_type_id,
+    // required this.occupation_id,
+    // required this.income_limit,
+    // required this.can_entry,
+  });
+  final int explainId;
+  final String? serviceName;
+  final String? serviceUrl;
+  // final int max_age;
+  // final int min_age;
+  // final start_date;
+  // final end_date;
+  // final int prefecture_id;
+  // final int restriction_id;
+  // final int operator_type_id;
+  // final int occupation_id;
+  // final int income_limit;
   // final bool can_entry;
 }

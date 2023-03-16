@@ -1,21 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:omurice/component/service_list_item.dart';
 import '../model/service_data_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class ServiceList extends StatelessWidget {
-  const ServiceList({Key? key, required this.mode}) : super(key: key);
+class ServiceList extends StatefulWidget {
+  const ServiceList({Key? key, required this.categoryId}) : super(key: key);
+  final int categoryId;
 
-  final Mode mode;
+  @override
+  ServiceListState createState() => ServiceListState();
+}
+
+class ServiceListState extends State<ServiceList> {
+  List<ExplainData> serviceDataList = [];
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    List<ExplainData> dataList = await getDiaryDataList();
+    setState(() {
+      serviceDataList = dataList;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       itemBuilder: (context, index) {
-        return ServiceListItem(
-          id: dummyServiceDataList[index].id,
-          name: dummyServiceDataList[index].name,
-          thumbnail_url: dummyServiceDataList[index].thumbnail_url,
+        return ExplainListItem(
+          id: serviceDataList[index].id,
+          categoryId: serviceDataList[index].categoryId,
+          explainId: serviceDataList[index].explainId,
+          explainName: serviceDataList[index].explainName,
+          explain: serviceDataList[index].explain,
+          explainUrl: serviceDataList[index].explainUrl,
+          serviceData: serviceDataList[index].serviceData,
         );
       },
       separatorBuilder: (context, index) {
@@ -23,33 +46,45 @@ class ServiceList extends StatelessWidget {
           thickness: 2,
         );
       },
-      itemCount: dummyServiceDataList.length,
+      itemCount: serviceDataList.length,
     );
   }
-}
 
-enum Mode {
-  myself,
-  follow,
-  timeline,
-}
+  final supabase = Supabase.instance.client;
 
-List<ServiceData> dummyServiceDataList = makeDummyList();
-const dummyServiceDataListBase = [
-  ServiceData(
-      id: 0,
-      name: 'グループホーム',
-      thumbnail_url:
-          'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
-];
+  Future<List<ExplainData>> getDiaryDataList() async {
+    final data = await supabase
+        .from('service')
+        .select()
+        .eq('category_id', widget.categoryId);
+    if (data == null) {
+      throw 'No data found';
+    }
+    final List<ServiceData> serviceDataList = data.map<ServiceData>((element) {
+      return ServiceData(
+        explainId: element['explain_id'],
+        serviceName: element['service_name'],
+        serviceUrl: element['service_url'],
+      );
+    }).toList() as List<ServiceData>;
+    final List<ExplainData> dataList = data.map<ExplainData>((element) {
+      return ExplainData(
+          id: element['id'],
+          categoryId: element['category_id'],
+          explainId: element['explain_id'],
+          explainName: element['explain_name'],
+          explain: element['explain'],
+          explainUrl: element['explain_url'],
+          serviceData: serviceDataList
+              .where((data) => data.explainId == element['explain_id'])
+              .toList());
+    }).toList() as List<ExplainData>;
+    final Map<int, ExplainData> dedupedDataMap = {};
+    for (final data in dataList) {
+      dedupedDataMap[data.explainId] = data;
+    }
 
-List<ServiceData> makeDummyList() {
-  List<ServiceData> list = [];
-  for (var i = 0; i < 100; i++) {
-    list.addAll(dummyServiceDataListBase);
+    final List<ExplainData> dedupedDataList = dedupedDataMap.values.toList();
+    return dedupedDataList;
   }
-  return list;
 }
-
-const dummyAvatarUrl =
-    "https://1.bp.blogspot.com/-pzkUACogq0E/X5OcHr5ZnSI/AAAAAAABb5Q/xb-j2PQXgu03_vypUL1XNOYv4bhpWEFgQCNcBGAsYHQ/s180-c/bird_mameruriha_inko_blue.png";
