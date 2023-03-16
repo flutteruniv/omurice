@@ -8,15 +8,7 @@ class DiaryData {
   });
   final String userName;
   final String? avatarUrl;
-  final DiaryKind diaryKind;
+  final int diaryKind;
   final String diaryText;
   final bool isBookmarked;
-}
-
-enum DiaryKind {
-  fiveSenses,
-  myPastSelf,
-  becomeYourFutureSelf,
-  serviceUsed,
-  free,
 }

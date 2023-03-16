@@ -14,7 +14,7 @@ class DiaryListItem extends StatelessWidget {
 
   final String userName;
   final String? avatarUrl;
-  final DiaryKind diaryKind;
+  final int diaryKind;
   final String diaryText;
   final bool isBookmarked;
   final VoidCallback onTapBookmark;
@@ -87,37 +87,44 @@ class DiaryListItem extends StatelessWidget {
   }
 }
 
-Widget getChip(DiaryKind kind) {
+Widget getChip(int kind) {
   switch (kind) {
-    case DiaryKind.fiveSenses:
+    case 0:
       {
         return Chip(
           label: const Text("五感"),
           backgroundColor: Colors.red[100],
         );
       }
-    case DiaryKind.myPastSelf:
+    case 1:
       {
         return Chip(
           label: const Text("過去"),
           backgroundColor: Colors.blue[100],
         );
       }
-    case DiaryKind.becomeYourFutureSelf:
+    case 2:
       {
         return Chip(
           label: const Text("未来"),
           backgroundColor: Colors.amber[100],
         );
       }
-    case DiaryKind.serviceUsed:
+    case 3:
       {
         return Chip(
           label: const Text("経験"),
           backgroundColor: Colors.purple[100],
         );
       }
-    case DiaryKind.free:
+    case 4:
+      {
+        return Chip(
+          label: const Text("自由"),
+          backgroundColor: Colors.green[100],
+        );
+      }
+    default:
       {
         return Chip(
           label: const Text("自由"),
