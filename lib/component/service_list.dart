@@ -8,11 +8,11 @@ class ServiceList extends StatefulWidget {
   final int categoryId;
 
   @override
-  _ServiceListState createState() => _ServiceListState();
+  ServiceListState createState() => ServiceListState();
 }
 
-class _ServiceListState extends State<ServiceList> {
-  List<ExplainData> ServiceDataList = [];
+class ServiceListState extends State<ServiceList> {
+  List<ExplainData> serviceDataList = [];
   @override
   void initState() {
     super.initState();
@@ -22,7 +22,7 @@ class _ServiceListState extends State<ServiceList> {
   Future<void> loadData() async {
     List<ExplainData> dataList = await getDiaryDataList();
     setState(() {
-      ServiceDataList = dataList;
+      serviceDataList = dataList;
     });
   }
 
@@ -32,13 +32,13 @@ class _ServiceListState extends State<ServiceList> {
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       itemBuilder: (context, index) {
         return ExplainListItem(
-          id: ServiceDataList[index].id,
-          category_id: ServiceDataList[index].category_id,
-          explain_id: ServiceDataList[index].explain_id,
-          explain_name: ServiceDataList[index].explain_name,
-          explain: ServiceDataList[index].explain,
-          explain_url: ServiceDataList[index].explain_url,
-          service_data: ServiceDataList[index].service_data,
+          id: serviceDataList[index].id,
+          categoryId: serviceDataList[index].categoryId,
+          explainId: serviceDataList[index].explainId,
+          explainName: serviceDataList[index].explainName,
+          explain: serviceDataList[index].explain,
+          explainUrl: serviceDataList[index].explainUrl,
+          serviceData: serviceDataList[index].serviceData,
         );
       },
       separatorBuilder: (context, index) {
@@ -46,7 +46,7 @@ class _ServiceListState extends State<ServiceList> {
           thickness: 2,
         );
       },
-      itemCount: ServiceDataList.length,
+      itemCount: serviceDataList.length,
     );
   }
 
@@ -60,29 +60,29 @@ class _ServiceListState extends State<ServiceList> {
     if (data == null) {
       throw 'No data found';
     }
-    final List<ServiceData> serviceDataList = data.map<ServiceData>((e) {
+    final List<ServiceData> serviceDataList = data.map<ServiceData>((element) {
       return ServiceData(
-        explain_id: e['explain_id'],
-        service_name: e['service_name'],
-        service_url: e['service_url'],
+        explainId: element['explain_id'],
+        serviceName: element['service_name'],
+        serviceUrl: element['service_url'],
       );
     }).toList() as List<ServiceData>;
-    final List<ExplainData> DataList = data.map<ExplainData>((e) {
+    final List<ExplainData> dataList = data.map<ExplainData>((element) {
       return ExplainData(
-          id: e['id'],
-          category_id: e['category_id'],
-          explain_id: e['explain_id'],
-          explain_name: e['explain_name'],
-          explain: e['explain'],
-          explain_url: e['explain_url'],
-          service_data: serviceDataList
-              .where((element) => element.explain_id == e['explain_id'])
+          id: element['id'],
+          categoryId: element['category_id'],
+          explainId: element['explain_id'],
+          explainName: element['explain_name'],
+          explain: element['explain'],
+          explainUrl: element['explain_url'],
+          serviceData: serviceDataList
+              .where((data) => data.explainId == element['explain_id'])
               .toList());
     }).toList() as List<ExplainData>;
     final Map<int, ExplainData> dedupedDataMap = {};
-    DataList.forEach((data) {
-      dedupedDataMap[data.explain_id] = data;
-    });
+    for (final data in dataList) {
+      dedupedDataMap[data.explainId] = data;
+    }
 
     final List<ExplainData> dedupedDataList = dedupedDataMap.values.toList();
     return dedupedDataList;
