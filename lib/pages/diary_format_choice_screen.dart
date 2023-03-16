@@ -30,7 +30,7 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 150, 20, 150),
+              padding: const EdgeInsets.fromLTRB(10, 70, 20, 100),
               child: TextButton.icon(
                 icon: const Icon(
                   Icons.mode_edit,

@@ -20,6 +20,16 @@ class ServiceDetailsScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.chevron_left))
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
