@@ -6,10 +6,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
-  String supabaseUrl = dotenv.env['SUPABASE_URL'] ?? '';
-  String supabaseKey = dotenv.env['SUPABASE_KEY'] ?? '';
-  await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
-  runApp(const MyApp());
+  Supabase.initialize(
+    url: dotenv.env['SUPABASE_URL'] ?? '',
+    anonKey: dotenv.env['SUPABASE_KEY'] ?? '',
+  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
