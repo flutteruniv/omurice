@@ -42,6 +42,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   material: ^1.0.0+2
   url_launcher: ^6.1.10
+  google_mobile_ads: ^2.3.0
 
 dev_dependencies:
   flutter_test:

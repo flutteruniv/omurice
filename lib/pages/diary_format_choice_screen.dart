@@ -56,9 +56,9 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
                 },
               ),
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+              children: const [
                 SizedBox(width: 50),
                 Text("特別な日記"),
               ],
