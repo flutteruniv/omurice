@@ -1,10 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:omurice/pages/top_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   await dotenv.load();
   Supabase.initialize(
     url: dotenv.env['SUPABASE_URL'] ?? '',
@@ -33,6 +36,7 @@ class MyApp extends StatelessWidget {
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
+
   @override
   State<AuthPage> createState() => _AuthPageState();
 }
@@ -72,6 +76,7 @@ class _AuthPageState extends State<AuthPage> {
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
+
   @override
   State<StartPage> createState() => _StartPageState();
 }
@@ -224,6 +229,37 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final SupabaseClient supabase = Supabase.instance.client;
+  late BannerAd _bannerAd;
+
+  final String adUnitId = kReleaseMode
+      ? dotenv.env['RELEASE_AD_UNIT_ID']!
+      : dotenv.env['DEV_AD_UNIT_ID']!;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerAd = BannerAd(
+      adUnitId: adUnitId,
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (Ad ad) {
+          print('バナー広告がロードされました。');
+        },
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          print('バナー広告のロードに失敗しました: $error');
+          ad.dispose();
+        },
+      ),
+    );
+    _bannerAd.load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -240,6 +276,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: const TopScreen(),
+      bottomSheet: // バナー広告を表示するためのウィジェット
+          Container(
+            height: _bannerAd.size.height.toDouble(),
+            child: AdWidget(ad: _bannerAd),
+          ),
     );
   }
 }
