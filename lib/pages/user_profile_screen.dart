@@ -74,18 +74,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     final double deviceHeight = MediaQuery.of(context).size.height;
     final double deviceWidth = MediaQuery.of(context).size.width;
-    final _userNameController =
+    final userNameController =
         TextEditingController(text: profileData.userName);
-    final _avatarUrlController =
+    final avatarUrlController =
         TextEditingController(text: profileData.avatarUrl);
-    final _ageController = TextEditingController(
-        text: profileData.age != null ? profileData.age.toString() : '年齢非公開');
-    final _professionController =
+    final ageController = TextEditingController(text: profileData.age);
+    final professionController =
         TextEditingController(text: profileData.profession);
-    final _disabilityController =
+    final disabilityController =
         TextEditingController(text: profileData.disability);
-    final _messageController = TextEditingController(text: profileData.message);
-    final _selfIntroduceController =
+    final messageController = TextEditingController(text: profileData.message);
+    final selfIntroduceController =
         TextEditingController(text: profileData.selfIntroduce);
     return Scaffold(
         body: SingleChildScrollView(
@@ -124,7 +123,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   child: Center(
                                     child: _isEdit == true
                                         ? TextFormField(
-                                            controller: _messageController,
+                                            controller: messageController,
                                           )
                                         : Text(profileData.message),
                                   ),
@@ -143,35 +142,30 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       SizedBox(height: deviceHeight * 0.03),
                       userProfileHeadline("自己紹介"),
                       _isEdit == true
-                          ? TextFormField(controller: _selfIntroduceController)
+                          ? TextFormField(controller: selfIntroduceController)
                           : Text(profileData.selfIntroduce),
                       SizedBox(height: deviceHeight * 0.03),
                       userProfileHeadline("基礎情報"),
                       _userBasicInfoListItem(
-                          'ニックネーム', profileData.userName, _userNameController),
+                          'ニックネーム', profileData.userName, userNameController),
                       _userBasicInfoListItem(
-                          '年齢',
-                          profileData.age != null
-                              ? profileData.age.toString()
-                              : '年齢非公開',
-                          _ageController),
+                          '年齢', profileData.age.toString(), ageController),
                       _userBasicInfoListItem(
-                          '職業', profileData.profession, _professionController),
+                          '職業', profileData.profession, professionController),
                       _userBasicInfoListItem('病気・障害', profileData.disability,
-                          _disabilityController),
+                          disabilityController),
                       SizedBox(height: deviceHeight * 0.03),
                       _isEdit == true
                           ? ElevatedButton(
                               onPressed: () async {
                                 await supabase.from('user').update({
-                                  'user_name': _userNameController.text,
-                                  'avatar_url': _avatarUrlController.text,
-                                  'age': _ageController.text,
-                                  'profession': _professionController.text,
-                                  'disability': _disabilityController.text,
-                                  'message': _messageController.text,
-                                  'self_introduce':
-                                      _selfIntroduceController.text
+                                  'user_name': userNameController.text,
+                                  'avatar_url': avatarUrlController.text,
+                                  'age': ageController.text,
+                                  'profession': professionController.text,
+                                  'disability': disabilityController.text,
+                                  'message': messageController.text,
+                                  'self_introduce': selfIntroduceController.text
                                 }).match({'user_id': profileData.userId});
                                 loadData();
                                 setState(() {
