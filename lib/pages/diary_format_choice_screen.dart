@@ -2,6 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:omurice/pages/diary_screen.dart';
 
+enum DiaryKind {
+  /* 五感日記 */
+  fiveSenses(id: 1),
+  /* 未来の自分になりきって */
+  futureSelf(id: 2),
+  /* 過去の自分へ */
+  pastSelf(id: 3),
+  /* 使ったサービス */
+  usedServices(id: 4),
+  /* 自由形式 */
+  free(id: 5);
+
+  const DiaryKind({required this.id});
+
+  final int id;
+}
+
 class DiaryFormatChoiceScreen extends StatefulWidget {
   const DiaryFormatChoiceScreen({Key? key}) : super(key: key);
 
@@ -49,7 +66,10 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const DiaryCreateScreen(format: ""),
+                      builder: (_) => DiaryCreateScreen(
+                        kindId: DiaryKind.free.id,
+                        format: "",
+                      ),
                       fullscreenDialog: true,
                     ),
                   );
@@ -78,8 +98,10 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) =>
-                        const DiaryCreateScreen(format: fiveSensesDiaryFormat),
+                    builder: (_) => DiaryCreateScreen(
+                      kindId: DiaryKind.fiveSenses.id,
+                      format: fiveSensesDiaryFormat,
+                    ),
                     fullscreenDialog: true,
                   ),
                 );
@@ -100,8 +122,10 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) =>
-                        const DiaryCreateScreen(format: myPastSelfFormat),
+                    builder: (_) => DiaryCreateScreen(
+                      kindId: DiaryKind.pastSelf.id,
+                      format: myPastSelfFormat,
+                    ),
                     fullscreenDialog: true,
                   ),
                 );
@@ -122,8 +146,10 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const DiaryCreateScreen(
-                        format: becomeYourFutureSelfFormat),
+                    builder: (_) => DiaryCreateScreen(
+                      kindId: DiaryKind.futureSelf.id,
+                      format: becomeYourFutureSelfFormat,
+                    ),
                     fullscreenDialog: true,
                   ),
                 );
@@ -144,8 +170,10 @@ class _DiaryFormatChoiceScreenState extends State<DiaryFormatChoiceScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) =>
-                        const DiaryCreateScreen(format: servicesUsedFormat),
+                    builder: (_) => DiaryCreateScreen(
+                      kindId: DiaryKind.usedServices.id,
+                      format: servicesUsedFormat,
+                    ),
                     fullscreenDialog: true,
                   ),
                 );

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DiaryCreateScreen extends StatefulWidget {
   const DiaryCreateScreen({
     Key? key,
+    required this.kindId,
     required this.format,
   }) : super(key: key);
 
+  final int kindId;
   final String format;
 
   @override
@@ -16,11 +19,23 @@ class DiaryCreateScreen extends StatefulWidget {
 class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
   TextEditingController? _controller;
   bool isSaveNeeded = false;
+  final supabase = Supabase.instance.client;
 
   @override
   void initState() {
     _controller = TextEditingController(text: widget.format);
     super.initState();
+  }
+
+  Future<void> insertDiary(String diaryText) async {
+    final currentUserID = supabase.auth.currentUser!.id;
+    await supabase.from('diary').insert({
+      'date': '2023-03-23', // todo 作成日の日付
+      // 'user_id': currentUserID,
+      'user_id': 5, // todo userId
+      'kind_id': widget.kindId,
+      'text': diaryText
+    });
   }
 
   @override
@@ -108,7 +123,11 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.black12),
-                              onPressed: () {},
+                              onPressed: () {
+                                if (_controller?.text != null) {
+                                  insertDiary(_controller!.text);
+                                }
+                              },
                               child: const Text(
                                 "投稿",
                                 style: TextStyle(
