@@ -29,9 +29,9 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
 
   Future<void> insertDiary(String diaryText) async {
     final currentUserID = supabase.auth.currentUser!.id;
+    var now = DateTime.now();
     await supabase.from('diary').insert({
-      'date': '2023-03-23', // todo 作成日の日付
-      // 'user_id': currentUserID,
+      'date': "${now.year}-${now.month}-${now.day}",
       'user_id': 5, // todo userId
       'kind_id': widget.kindId,
       'text': diaryText
