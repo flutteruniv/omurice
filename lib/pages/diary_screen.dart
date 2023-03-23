@@ -125,7 +125,21 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
                                   backgroundColor: Colors.black12),
                               onPressed: () {
                                 if (_controller?.text != null) {
-                                  insertDiary(_controller!.text);
+                                  try {
+                                    insertDiary(_controller!.text);
+                                    const snackBar = SnackBar(
+                                      content: Text('日記を投稿しました'),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                    // todo 日記一覧画面に移動
+                                  } catch (e) {
+                                    const snackBar = SnackBar(
+                                      content: Text('日記の投稿に失敗しました'),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  }
                                 }
                               },
                               child: const Text(
