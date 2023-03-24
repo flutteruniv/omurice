@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../model/diary_data_model.dart';
 
 class DiaryListItem extends StatelessWidget {
   const DiaryListItem({

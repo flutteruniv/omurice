@@ -9,7 +9,7 @@ class DiaryList extends StatefulWidget {
   final Mode mode;
 
   @override
-  _DiaryListState createState() => _DiaryListState();
+  State<DiaryList> createState() => _DiaryListState();
 }
 
 class _DiaryListState extends State<DiaryList> {
