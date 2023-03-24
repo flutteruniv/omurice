@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:omurice/pages/nav_host.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DiaryCreateScreen extends StatefulWidget {
@@ -129,7 +130,16 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
                                     );
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
-                                    // todo 日記一覧画面に移動
+                                    // 日記一覧画面に移動
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const NavHost(
+                                          title: "",
+                                          selectedIndex: 1,
+                                        ),
+                                      ),
+                                    );
                                   } catch (e) {
                                     const snackBar = SnackBar(
                                       content: Text('日記の投稿に失敗しました'),
