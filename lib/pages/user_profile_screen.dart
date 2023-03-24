@@ -31,11 +31,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   final supabase = Supabase.instance.client;
   Future<UserData> getProfile() async {
     final currentUserID = supabase.auth.currentUser!.id;
-    var data = await supabase
-        .from('user')
-        .select()
-        .eq('user_id', currentUserID)
-        .single();
+    var data =
+        await supabase.from('user').select().eq('user_id', currentUserID);
     if (data == null || data.isEmpty) {
       await supabase.from('user').insert({'user_id': currentUserID});
       data = await supabase
