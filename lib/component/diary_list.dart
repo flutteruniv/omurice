@@ -57,6 +57,10 @@ enum Mode {
 
 final supabase = Supabase.instance.client;
 
+// getMyDiaryList() : 自分自身の日記データを取得
+// getFollowerDiaryList() : フォロワーの日記データを取得
+// getAnyoneDiaryList() : タイムライン
+
 // todo Diaryデータを取得し、それを表示用のDiaryDataデータとして適用する
 // todo Bookmark管理用のテーブルを用意する
 Future<List<DiaryData>> getDiaryDataList() async {
@@ -69,21 +73,33 @@ Future<List<DiaryData>> getDiaryDataList() async {
   // myself: 自分自身のユーザID
   // follow: フォロワーのユーザID
   // timeline: 全ユーザのユーザID
-  final userData = await supabase.from('user').select().eq('id', 5);
+
+  // ユーザIDを取得する
+  final currentUserID = supabase.auth.currentUser!.id;
+
+  // ユーザIDを検索キーにして該当するuser情報を取得する
+  final userData = await supabase
+      .from('user')
+      .select()
+      .eq('user_id', currentUserID)
+      .limit(1)
+      .single();
   if (userData == null) {
     throw 'No user found';
   }
+
+  // user情報からuser_idを取り出して、userName, avatarUrlを設定する
+
   final diaryList = await supabase.from('diary').select().eq("user_id", 5);
   if (diaryList == null) {
-    // 日記がありませんとトースト通知？もしくは、Centerに表示する方がいい？
+    return [];
   }
 
   // todo DiaryDataをmapにてリストに変換している -> Diaryを変換する形にする
   final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((e) {
-    final user = userData[0]; // user_id - 1 を入れる
     return DiaryData(
-      userName: user['user_name'] as String,
-      avatarUrl: user['avatar_url'] as String?,
+      userName: userData['user_name'] as String,
+      avatarUrl: userData['avatar_url'] as String?,
       diaryKind: e['kind_id'] as int,
       diaryText: e['text'] as String,
       // isBookmarked: e['is_bookmark'] as bool,
