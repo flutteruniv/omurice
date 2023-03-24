@@ -28,14 +28,19 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
     super.initState();
   }
 
-  Future<void> insertDiary(String diaryText) async {
+  Future<bool> insertDiary(String diaryText) async {
     var now = DateTime.now();
-    await supabase.from('diary').insert({
-      'date': "${now.year}-${now.month}-${now.day}",
-      'user_id': 5, // todo userId
-      'kind_id': widget.kindId,
-      'text': diaryText
-    });
+    try {
+      await supabase.from('diary').insert({
+        'date': "${now.year}-${now.month}-${now.day}",
+        'user_id': 5, // todo userId
+        'kind_id': widget.kindId,
+        'text': diaryText
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
@@ -123,30 +128,32 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
                                   backgroundColor: Colors.black12),
                               onPressed: () {
                                 if (_controller?.text != null) {
-                                  try {
-                                    insertDiary(_controller!.text);
-                                    const snackBar = SnackBar(
-                                      content: Text('日記を投稿しました'),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                    // 日記一覧画面に移動
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => const NavHost(
-                                          title: "",
-                                          selectedIndex: 1,
+                                  insertDiary(_controller!.text)
+                                      .then((isSuccess) {
+                                    if (isSuccess) {
+                                      const snackBar = SnackBar(
+                                        content: Text('日記を投稿しました'),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                      // 日記一覧画面に移動
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => const NavHost(
+                                            title: "",
+                                            selectedIndex: 1,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  } catch (e) {
-                                    const snackBar = SnackBar(
-                                      content: Text('日記の投稿に失敗しました'),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  }
+                                      );
+                                    } else {
+                                      const snackBar = SnackBar(
+                                        content: Text('日記の投稿に失敗しました'),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                    }
+                                  });
                                 }
                               },
                               child: const Text(
