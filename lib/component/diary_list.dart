@@ -57,9 +57,23 @@ enum Mode {
 
 final supabase = Supabase.instance.client;
 
+// Modeに応じて取得するリストを切り替える
+
 // getMyDiaryList() : 自分自身の日記データを取得
 // getFollowerDiaryList() : フォロワーの日記データを取得
 // getAnyoneDiaryList() : タイムライン
+
+Future<List<DiaryData>> getMyDiaryList() async {
+  return [];
+}
+
+Future<List<DiaryData>> getFollowerDiaryList() async {
+  return [];
+}
+
+Future<List<DiaryData>> getAnyoneDiaryList() async {
+  return [];
+}
 
 // todo Diaryデータを取得し、それを表示用のDiaryDataデータとして適用する
 // todo Bookmark管理用のテーブルを用意する
@@ -90,7 +104,8 @@ Future<List<DiaryData>> getDiaryDataList() async {
 
   // user情報からuser_idを取り出して、userName, avatarUrlを設定する
 
-  final diaryList = await supabase.from('diary').select().eq("user_id", 5);
+  final diaryList =
+      await supabase.from('diary').select().eq("user_id", userData['id']);
   if (diaryList == null) {
     return [];
   }
@@ -107,5 +122,6 @@ Future<List<DiaryData>> getDiaryDataList() async {
       isBookmarked: false,
     );
   }).toList() as List<DiaryData>;
+  // todo リストの項目を作成時刻に対して降順に並び替える
   return diaryDataList;
 }
