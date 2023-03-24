@@ -28,7 +28,6 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
   }
 
   Future<void> insertDiary(String diaryText) async {
-    final currentUserID = supabase.auth.currentUser!.id;
     var now = DateTime.now();
     await supabase.from('diary').insert({
       'date': "${now.year}-${now.month}-${now.day}",
@@ -68,23 +67,21 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
                   height: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Expanded(
-                      child: TextField(
-                        controller: _controller,
-                        style: const TextStyle(
-                          fontSize: 24,
-                        ),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        onChanged: (value) {
-                          setState(() {
-                            isSaveNeeded = value.isNotEmpty;
-                          });
-                        },
+                    child: TextField(
+                      controller: _controller,
+                      style: const TextStyle(
+                        fontSize: 24,
                       ),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      onChanged: (value) {
+                        setState(() {
+                          isSaveNeeded = value.isNotEmpty;
+                        });
+                      },
                     ),
                   ),
                   // ),
