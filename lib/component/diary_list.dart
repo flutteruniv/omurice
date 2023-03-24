@@ -132,5 +132,7 @@ Future<List<DiaryData>> getFollowerDiaryList() async {
 }
 
 Future<List<DiaryData>> getTimelineDiaryList() async {
-  return [];
+  List<DiaryData> myDiaryList = await getMyDiaryList();
+  List<DiaryData> followerDiaryList = await getFollowerDiaryList();
+  return Future.sync(() => myDiaryList + followerDiaryList);
 }
