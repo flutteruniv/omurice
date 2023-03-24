@@ -57,23 +57,38 @@ enum Mode {
 
 final supabase = Supabase.instance.client;
 
+// todo Diaryデータを取得し、それを表示用のDiaryDataデータとして適用する
+// todo Bookmark管理用のテーブルを用意する
 Future<List<DiaryData>> getDiaryDataList() async {
-  final data = await supabase.from('diary_data').select();
-  if (data == null) {
-    throw 'No data found';
-  }
-  final userData = await supabase.from('user').select();
+  // final data = await supabase.from('diary_data').select();
+  // if (data == null) {
+  //   throw 'No data found';
+  // }
+
+  // ここでは目的のユーザIDを取得可能にする
+  // myself: 自分自身のユーザID
+  // follow: フォロワーのユーザID
+  // timeline: 全ユーザのユーザID
+  final userData = await supabase.from('user').select().eq('id', 5);
   if (userData == null) {
     throw 'No user found';
   }
-  final List<DiaryData> diaryDataList = data.map<DiaryData>((e) {
-    final user = userData[e['user']];
+  final diaryList = await supabase.from('diary').select().eq("user_id", 5);
+  if (diaryList == null) {
+    // 日記がありませんとトースト通知？もしくは、Centerに表示する方がいい？
+  }
+
+  // todo DiaryDataをmapにてリストに変換している -> Diaryを変換する形にする
+  final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((e) {
+    final user = userData[0]; // user_id - 1 を入れる
     return DiaryData(
       userName: user['user_name'] as String,
       avatarUrl: user['avatar_url'] as String?,
-      diaryKind: e['diary_kind'] as int,
-      diaryText: e['diary_text'] as String,
-      isBookmarked: e['is_bookmark'] as bool,
+      diaryKind: e['kind_id'] as int,
+      diaryText: e['text'] as String,
+      // isBookmarked: e['is_bookmark'] as bool,
+      // todo ブックマークは、専用のテーブルを用意する必要がある
+      isBookmarked: false,
     );
   }).toList() as List<DiaryData>;
   return diaryDataList;
