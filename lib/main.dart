@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:omurice/pages/top_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -232,10 +233,12 @@ class _MyHomePageState extends State<MyHomePage> {
   late BannerAd _bannerAd;
 
   // TODO: privateなenvファイルに広告のIDの環境変数を実装する
+  final String androidAdUnitId = dotenv.env['ANDROID_AD_UNIT_ID'] ?? '';
+  final String iosAdUnitId = dotenv.env['IOS_AD_UNIT_ID'] ?? '';
   // final String adUnitId = kReleaseMode
   //     ? dotenv.env['RELEASE_AD_UNIT_ID']!
   //     : dotenv.env['DEV_AD_UNIT_ID']!;
-  final String adUnitId = 'ca-app-pub-3940256099942544/2934735716';
+  // final String adUnitId = 'ca-app-pub-3940256099942544/2934735716';
   // androidのテスト用のID
   // ca-app-pub-3940256099942544/6300978111
 
@@ -243,7 +246,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _bannerAd = BannerAd(
-      adUnitId: adUnitId,
+      adUnitId: Platform.isAndroid ? androidAdUnitId : iosAdUnitId,
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
@@ -282,9 +285,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: const TopScreen(),
       bottomSheet: // バナー広告を表示するためのウィジェット
           Container(
-            height: _bannerAd.size.height.toDouble(),
-            child: AdWidget(ad: _bannerAd),
-          ),
+        height: _bannerAd.size.height.toDouble(),
+        child: AdWidget(ad: _bannerAd),
+      ),
     );
   }
 }

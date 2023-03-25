@@ -21,14 +21,14 @@ class ServiceListScreen extends StatelessWidget {
               elevation: 4,
               backgroundColor: Colors.white,
               automaticallyImplyLeading: false,
-              flexibleSpace: const Center(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 40),
-                  child: SearchWidget(
-                    hint: "キーワードで検索",
-                  ),
-                ),
-              ),
+              // flexibleSpace: const Center(
+              //   child: Padding(
+              //     padding: EdgeInsets.fromLTRB(10, 0, 10, 40),
+              //     child: SearchWidget(
+              //       hint: "キーワードで検索",
+              //     ),
+              //   ),
+              // ),
               bottom: TabBar(
                 labelColor: Colors.black,
                 labelStyle: const TextStyle(

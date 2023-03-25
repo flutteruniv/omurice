@@ -40,6 +40,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           .select()
           .eq('user_id', currentUserID)
           .single();
+    } else {
+      data = await supabase
+          .from('user')
+          .select()
+          .eq('user_id', currentUserID)
+          .single();
     }
     return UserData(
         userId: data['user_id'],
