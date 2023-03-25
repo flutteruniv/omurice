@@ -35,12 +35,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         await supabase.from('user').select().eq('user_id', currentUserID);
     if (data == null || data.isEmpty) {
       await supabase.from('user').insert({'user_id': currentUserID});
-      data = await supabase
-          .from('user')
-          .select()
-          .eq('user_id', currentUserID)
-          .single();
     }
+    data = await supabase
+        .from('user')
+        .select()
+        .eq('user_id', currentUserID)
+        .single();
     return UserData(
         userId: data['user_id'],
         userName: data['user_name'],
