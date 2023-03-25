@@ -231,9 +231,13 @@ class _MyHomePageState extends State<MyHomePage> {
   final SupabaseClient supabase = Supabase.instance.client;
   late BannerAd _bannerAd;
 
-  final String adUnitId = kReleaseMode
-      ? dotenv.env['RELEASE_AD_UNIT_ID']!
-      : dotenv.env['DEV_AD_UNIT_ID']!;
+  // TODO: privateなenvファイルに広告のIDの環境変数を実装する
+  // final String adUnitId = kReleaseMode
+  //     ? dotenv.env['RELEASE_AD_UNIT_ID']!
+  //     : dotenv.env['DEV_AD_UNIT_ID']!;
+  final String adUnitId = 'ca-app-pub-3940256099942544/2934735716';
+  // androidのテスト用のID
+  // ca-app-pub-3940256099942544/6300978111
 
   @override
   void initState() {

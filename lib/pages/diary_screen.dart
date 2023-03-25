@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:omurice/pages/nav_host.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DiaryCreateScreen extends StatefulWidget {
   const DiaryCreateScreen({
     Key? key,
+    required this.kindId,
     required this.format,
   }) : super(key: key);
 
+  final int kindId;
   final String format;
 
   @override
@@ -16,11 +20,27 @@ class DiaryCreateScreen extends StatefulWidget {
 class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
   TextEditingController? _controller;
   bool isSaveNeeded = false;
+  final supabase = Supabase.instance.client;
 
   @override
   void initState() {
     _controller = TextEditingController(text: widget.format);
     super.initState();
+  }
+
+  Future<bool> insertDiary(String diaryText) async {
+    var now = DateTime.now();
+    try {
+      await supabase.from('diary').insert({
+        'date': "${now.year}-${now.month}-${now.day}",
+        'user_id': 5, // todo userId
+        'kind_id': widget.kindId,
+        'text': diaryText
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
@@ -53,23 +73,21 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
                   height: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Expanded(
-                      child: TextField(
-                        controller: _controller,
-                        style: const TextStyle(
-                          fontSize: 24,
-                        ),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        onChanged: (value) {
-                          setState(() {
-                            isSaveNeeded = value.isNotEmpty;
-                          });
-                        },
+                    child: TextField(
+                      controller: _controller,
+                      style: const TextStyle(
+                        fontSize: 24,
                       ),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      onChanged: (value) {
+                        setState(() {
+                          isSaveNeeded = value.isNotEmpty;
+                        });
+                      },
                     ),
                   ),
                   // ),
@@ -108,7 +126,36 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.black12),
-                              onPressed: () {},
+                              onPressed: () {
+                                if (_controller?.text != null) {
+                                  insertDiary(_controller!.text)
+                                      .then((isSuccess) {
+                                    if (isSuccess) {
+                                      const snackBar = SnackBar(
+                                        content: Text('日記を投稿しました'),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                      // 日記一覧画面に移動
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => const NavHost(
+                                            title: "",
+                                            selectedIndex: 1,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      const snackBar = SnackBar(
+                                        content: Text('日記の投稿に失敗しました'),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                    }
+                                  });
+                                }
+                              },
                               child: const Text(
                                 "投稿",
                                 style: TextStyle(
