@@ -120,7 +120,6 @@ Future<List<DiaryData>> getFollowerDiaryList() async {
     diaryList.addAll(list);
   }
   final userList = await supabase.from('user').select();
-
   final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((diaryItem) {
     var user = userList
         .firstWhere((userItem) => userItem['id'] == diaryItem['user_id']);
