@@ -73,17 +73,22 @@ Future<List<DiaryData>> getDiaryDataList(Mode mode) async {
   }
 }
 
-Future<List<DiaryData>> getMyDiaryList() async {
-  final currentUserID = supabase.auth.currentUser!.id;
+Future<Map<String, dynamic>> getUserData(String userID) async {
   final userData = await supabase
       .from('user')
       .select()
-      .eq('user_id', currentUserID)
+      .eq('user_id', userID)
       .limit(1)
       .single();
   if (userData == null) {
     throw 'No user found';
   }
+  return userData;
+}
+
+Future<List<DiaryData>> getMyDiaryList() async {
+  final currentUserID = supabase.auth.currentUser!.id;
+  final userData = await getUserData(currentUserID);
   final diaryList =
       await supabase.from('diary').select().eq("user_id", userData['id']);
   if (diaryList == null) {
@@ -103,15 +108,7 @@ Future<List<DiaryData>> getMyDiaryList() async {
 
 Future<List<DiaryData>> getFollowerDiaryList() async {
   final currentUserID = supabase.auth.currentUser!.id;
-  final userData = await supabase
-      .from('user')
-      .select()
-      .eq('user_id', currentUserID)
-      .limit(1)
-      .single();
-  if (userData == null) {
-    throw 'No user found';
-  }
+  final userData = await getUserData(currentUserID);
   var followIds = userData['follow'];
   var diaryList = [];
   for (var id in followIds) {
