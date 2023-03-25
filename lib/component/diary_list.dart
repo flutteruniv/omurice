@@ -22,6 +22,11 @@ class _DiaryListState extends State<DiaryList> {
       setState(() {
         diaryDataList = dataList;
       });
+    }).catchError((e) {
+      const snackBar = SnackBar(
+        content: Text('エラーが発生しました'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
   }
 
@@ -57,7 +62,6 @@ enum Mode {
 
 final supabase = Supabase.instance.client;
 
-// Modeに応じて取得するリストを切り替える
 Future<List<DiaryData>> getDiaryDataList(Mode mode) async {
   switch (mode) {
     case Mode.myself:
