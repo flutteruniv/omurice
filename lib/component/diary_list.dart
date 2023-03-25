@@ -94,12 +94,12 @@ Future<List<DiaryData>> getMyDiaryList() async {
   if (diaryList == null) {
     return [];
   }
-  final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((e) {
+  final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((diaryItem) {
     return DiaryData(
       userName: userData['user_name'] as String,
       avatarUrl: userData['avatar_url'] as String?,
-      diaryKind: e['kind_id'] as int,
-      diaryText: e['text'] as String,
+      diaryKind: diaryItem['kind_id'] as int,
+      diaryText: diaryItem['text'] as String,
       isBookmarked: false,
     );
   }).toList() as List<DiaryData>;
