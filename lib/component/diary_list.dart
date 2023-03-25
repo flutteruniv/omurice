@@ -9,7 +9,7 @@ class DiaryList extends StatefulWidget {
   final Mode mode;
 
   @override
-  _DiaryListState createState() => _DiaryListState();
+  State<DiaryList> createState() => _DiaryListState();
 }
 
 class _DiaryListState extends State<DiaryList> {
@@ -18,10 +18,15 @@ class _DiaryListState extends State<DiaryList> {
   @override
   void initState() {
     super.initState();
-    getDiaryDataList().then((dataList) {
+    getDiaryDataList(widget.mode).then((dataList) {
       setState(() {
         diaryDataList = dataList;
       });
+    }).catchError((e) {
+      const snackBar = SnackBar(
+        content: Text('エラーが発生しました'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
   }
 
@@ -57,24 +62,91 @@ enum Mode {
 
 final supabase = Supabase.instance.client;
 
-Future<List<DiaryData>> getDiaryDataList() async {
-  final data = await supabase.from('diary_data').select();
-  if (data == null) {
-    throw 'No data found';
+Future<List<DiaryData>> getDiaryDataList(Mode mode) async {
+  switch (mode) {
+    case Mode.myself:
+      return getMyDiaryList();
+    case Mode.follow:
+      return getFollowerDiaryList();
+    case Mode.timeline:
+      return getTimelineDiaryList();
   }
-  final userData = await supabase.from('user').select();
+}
+
+Future<Map<String, dynamic>> getUserData(String userID) async {
+  final userData = await supabase
+      .from('user')
+      .select()
+      .eq('user_id', userID)
+      .limit(1)
+      .single();
   if (userData == null) {
     throw 'No user found';
   }
-  final List<DiaryData> diaryDataList = data.map<DiaryData>((e) {
-    final user = userData[e['user']];
+  return userData;
+}
+
+Future<List<dynamic>> getDiaryList(int? userId) async {
+  if (userId != null) {
+    return await supabase.from('diary').select().eq("user_id", userId);
+  } else {
+    return await supabase.from('diary').select();
+  }
+}
+
+Future<List<DiaryData>> getMyDiaryList() async {
+  final currentUserID = supabase.auth.currentUser!.id;
+  final userData = await getUserData(currentUserID);
+  final diaryList = await getDiaryList(userData['id']);
+  final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((diaryItem) {
+    return DiaryData(
+      userName: userData['user_name'] as String,
+      avatarUrl: userData['avatar_url'] as String?,
+      diaryKind: diaryItem['kind_id'] as int,
+      diaryText: diaryItem['text'] as String,
+      isBookmarked: false,
+    );
+  }).toList();
+  return diaryDataList;
+}
+
+Future<List<DiaryData>> getFollowerDiaryList() async {
+  final currentUserID = supabase.auth.currentUser!.id;
+  final userData = await getUserData(currentUserID);
+  var followIds = userData['follow'];
+  var diaryList = [];
+  for (var id in followIds) {
+    final list = await getDiaryList(int.parse(id));
+    diaryList.addAll(list);
+  }
+  final userList = await supabase.from('user').select();
+  final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((diaryItem) {
+    var user = userList
+        .firstWhere((userItem) => userItem['id'] == diaryItem['user_id']);
     return DiaryData(
       userName: user['user_name'] as String,
       avatarUrl: user['avatar_url'] as String?,
-      diaryKind: e['diary_kind'] as int,
-      diaryText: e['diary_text'] as String,
-      isBookmarked: e['is_bookmark'] as bool,
+      diaryKind: diaryItem['kind_id'] as int,
+      diaryText: diaryItem['text'] as String,
+      isBookmarked: false,
     );
-  }).toList() as List<DiaryData>;
+  }).toList();
+  return diaryDataList;
+}
+
+Future<List<DiaryData>> getTimelineDiaryList() async {
+  final diaryList = await getDiaryList(null);
+  final userList = await supabase.from('user').select();
+  final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((diaryItem) {
+    var user = userList
+        .firstWhere((userItem) => userItem['id'] == diaryItem['user_id']);
+    return DiaryData(
+      userName: user['user_name'] as String,
+      avatarUrl: user['avatar_url'] as String?,
+      diaryKind: diaryItem['kind_id'] as int,
+      diaryText: diaryItem['text'] as String,
+      isBookmarked: false,
+    );
+  }).toList();
   return diaryDataList;
 }
