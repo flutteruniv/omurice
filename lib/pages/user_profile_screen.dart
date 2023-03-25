@@ -13,7 +13,7 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  var _isEdit = false;
+  bool _isEdit = false;
   var profileData = const UserData(
       userId: '',
       userName: '',
@@ -25,7 +25,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       selfIntroduce: '',
       follow: [],
       bookmark: []);
-  final String avatarUrl =
+  final String defaultAvatarUrl =
       "https://4.bp.blogspot.com/-pDC6umJH8H4/UbVvXL3PPEI/AAAAAAAAUwE/7IzHI_SmA40/s800/vacation_sunset.png";
 
   final supabase = Supabase.instance.client;
@@ -103,8 +103,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             radius: deviceWidth * 0.1,
                             backgroundImage: NetworkImage(
                                 profileData.avatarUrl == ''
-                                    ? avatarUrl
-                                    : profileData.avatarUrl ?? avatarUrl),
+                                    ? defaultAvatarUrl
+                                    : profileData.avatarUrl ??
+                                        defaultAvatarUrl),
                           ),
                           SizedBox(
                             width: deviceWidth * 0.1,
