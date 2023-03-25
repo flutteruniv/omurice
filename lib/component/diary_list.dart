@@ -86,14 +86,18 @@ Future<Map<String, dynamic>> getUserData(String userID) async {
   return userData;
 }
 
+Future<List<dynamic>> getDiaryList(int? userId) async {
+  if (userId != null) {
+    return await supabase.from('diary').select().eq("user_id", userId);
+  } else {
+    return await supabase.from('diary').select();
+  }
+}
+
 Future<List<DiaryData>> getMyDiaryList() async {
   final currentUserID = supabase.auth.currentUser!.id;
   final userData = await getUserData(currentUserID);
-  final diaryList =
-      await supabase.from('diary').select().eq("user_id", userData['id']);
-  if (diaryList == null) {
-    return [];
-  }
+  final diaryList = await getDiaryList(userData['id']);
   final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((diaryItem) {
     return DiaryData(
       userName: userData['user_name'] as String,
@@ -102,7 +106,7 @@ Future<List<DiaryData>> getMyDiaryList() async {
       diaryText: diaryItem['text'] as String,
       isBookmarked: false,
     );
-  }).toList() as List<DiaryData>;
+  }).toList();
   return diaryDataList;
 }
 
@@ -112,8 +116,7 @@ Future<List<DiaryData>> getFollowerDiaryList() async {
   var followIds = userData['follow'];
   var diaryList = [];
   for (var id in followIds) {
-    final list =
-        await supabase.from('diary').select().eq("user_id", int.parse(id));
+    final list = await getDiaryList(int.parse(id));
     diaryList.addAll(list);
   }
   final userList = await supabase.from('user').select();
@@ -133,10 +136,7 @@ Future<List<DiaryData>> getFollowerDiaryList() async {
 }
 
 Future<List<DiaryData>> getTimelineDiaryList() async {
-  final diaryList = await supabase.from('diary').select();
-  if (diaryList == null) {
-    return [];
-  }
+  final diaryList = await getDiaryList(null);
   final userList = await supabase.from('user').select();
   final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((diaryItem) {
     var user = userList
@@ -148,6 +148,6 @@ Future<List<DiaryData>> getTimelineDiaryList() async {
       diaryText: diaryItem['text'] as String,
       isBookmarked: false,
     );
-  }).toList() as List<DiaryData>;
+  }).toList();
   return diaryDataList;
 }
