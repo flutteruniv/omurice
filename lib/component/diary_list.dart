@@ -132,7 +132,21 @@ Future<List<DiaryData>> getFollowerDiaryList() async {
 }
 
 Future<List<DiaryData>> getTimelineDiaryList() async {
-  List<DiaryData> myDiaryList = await getMyDiaryList();
-  List<DiaryData> followerDiaryList = await getFollowerDiaryList();
-  return Future.sync(() => myDiaryList + followerDiaryList);
+  final diaryList = await supabase.from('diary').select();
+  if (diaryList == null) {
+    return [];
+  }
+  final userList = await supabase.from('user').select();
+  final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((diaryItem) {
+    var user = userList
+        .firstWhere((userItem) => userItem['id'] == diaryItem['user_id']);
+    return DiaryData(
+      userName: user['user_name'] as String,
+      avatarUrl: user['avatar_url'] as String?,
+      diaryKind: diaryItem['kind_id'] as int,
+      diaryText: diaryItem['text'] as String,
+      isBookmarked: false,
+    );
+  }).toList() as List<DiaryData>;
+  return diaryDataList;
 }
