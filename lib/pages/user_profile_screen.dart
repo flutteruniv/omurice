@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:omurice/utils/constants.dart';
 import '../component/user_profile_headline.dart';
 import 'package:omurice/model/user_data_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -30,6 +31,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   final supabase = Supabase.instance.client;
   Future<UserData> getProfile() async {
+    await refreshSession();
     final currentUserID = supabase.auth.currentUser!.id;
     var data =
         await supabase.from('user').select().eq('user_id', currentUserID);
@@ -156,6 +158,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       _isEdit == true
                           ? ElevatedButton(
                               onPressed: () async {
+                                await refreshSession();
                                 await supabase.from('user').update({
                                   'user_name': userNameController.text,
                                   'avatar_url': avatarUrlController.text,
