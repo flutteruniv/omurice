@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:omurice/pages/nav_host.dart';
+import 'package:omurice/utils/constants.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DiaryCreateScreen extends StatefulWidget {
@@ -29,6 +30,7 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
   }
 
   Future<bool> insertDiary(String diaryText) async {
+    await refreshSession();
     var now = DateTime.now();
     try {
       await supabase.from('diary').insert({

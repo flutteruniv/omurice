@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:omurice/component/diary_list_item.dart';
+import 'package:omurice/utils/constants.dart';
 import '../model/diary_data_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -74,6 +75,7 @@ Future<List<DiaryData>> getDiaryDataList(Mode mode) async {
 }
 
 Future<Map<String, dynamic>> getUserData(String userID) async {
+  await refreshSession();
   final userData = await supabase
       .from('user')
       .select()
@@ -87,6 +89,7 @@ Future<Map<String, dynamic>> getUserData(String userID) async {
 }
 
 Future<List<dynamic>> getDiaryList(int? userId) async {
+  await refreshSession();
   if (userId != null) {
     return await supabase.from('diary').select().eq("user_id", userId);
   } else {
@@ -111,6 +114,7 @@ Future<List<DiaryData>> getMyDiaryList() async {
 }
 
 Future<List<DiaryData>> getFollowerDiaryList() async {
+  await refreshSession();
   final currentUserID = supabase.auth.currentUser!.id;
   final userData = await getUserData(currentUserID);
   var followIds = userData['follow'];
@@ -135,6 +139,7 @@ Future<List<DiaryData>> getFollowerDiaryList() async {
 }
 
 Future<List<DiaryData>> getTimelineDiaryList() async {
+  await refreshSession();
   final diaryList = await getDiaryList(null);
   final userList = await supabase.from('user').select();
   final List<DiaryData> diaryDataList = diaryList.map<DiaryData>((diaryItem) {
