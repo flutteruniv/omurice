@@ -10,7 +10,8 @@
 .svn/
 migrate_working_dir/
 .env
-
+/android\app\src\main\AndroidManifest.xml
+**\ios\Runner\Info.plist
 # IntelliJ related
 *.iml
 *.ipr

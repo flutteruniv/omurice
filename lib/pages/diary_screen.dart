@@ -31,11 +31,17 @@ class _DiaryCreateScreenState extends State<DiaryCreateScreen> {
 
   Future<bool> insertDiary(String diaryText) async {
     await refreshSession();
+    // final userId = supabase.auth.currentUser!.id;
+    final user = await supabase
+        .from('user')
+        .select()
+        .eq('user_id', supabase.auth.currentUser!.id)
+        .single();
     var now = DateTime.now();
     try {
       await supabase.from('diary').insert({
         'date': "${now.year}-${now.month}-${now.day}",
-        'user_id': 5, // todo userId
+        'user_id': user['id'],
         'kind_id': widget.kindId,
         'text': diaryText
       });
