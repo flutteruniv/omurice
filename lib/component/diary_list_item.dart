@@ -88,14 +88,14 @@ class DiaryListItem extends StatelessWidget {
 
 Widget getChip(int kind) {
   switch (kind) {
-    case 0:
+    case 1:
       {
         return Chip(
           label: const Text("五感"),
           backgroundColor: Colors.red[100],
         );
       }
-    case 1:
+    case 3:
       {
         return Chip(
           label: const Text("過去"),
@@ -109,14 +109,14 @@ Widget getChip(int kind) {
           backgroundColor: Colors.amber[100],
         );
       }
-    case 3:
+    case 4:
       {
         return Chip(
           label: const Text("経験"),
           backgroundColor: Colors.purple[100],
         );
       }
-    case 4:
+    case 5:
       {
         return Chip(
           label: const Text("自由"),

@@ -1,18 +1,18 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:omurice/pages/top_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
   await dotenv.load();
   Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL'] ?? '',
-    anonKey: dotenv.env['SUPABASE_KEY'] ?? '',
+    url: "https://qqcuxrfjiohsorwdiliz.supabase.co",
+    anonKey:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxY3V4cmZqaW9oc29yd2RpbGl6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzk2MTIxOTUsImV4cCI6MTk5NTE4ODE5NX0.mv5b2hABJLaB1Rfvu-9_1_cfbff2MxH4WUZt88S5qSY",
   );
   runApp(MyApp());
 }
@@ -246,7 +246,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _bannerAd = BannerAd(
-      adUnitId: Platform.isAndroid ? androidAdUnitId : iosAdUnitId,
+      adUnitId: UniversalPlatform.isAndroid ? androidAdUnitId : iosAdUnitId,
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
