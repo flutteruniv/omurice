@@ -1,17 +1,19 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:omurice/pages/top_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
-  await dotenv.load();
+  if (!UniversalPlatform.isWeb) {
+    MobileAds.instance.initialize();
+    await dotenv.load();
+  }
   Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL'] ?? '',
-    anonKey: dotenv.env['SUPABASE_KEY'] ?? '',
+    url: dotenv.env['SUPABASE_URL'] ?? "",
+    anonKey: dotenv.env['SUPABASE_KEY'] ?? "",
   );
   runApp(MyApp());
 }
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Sawarabi_Gothic',
       ),
       home: const AuthPage(
           // title: 'Flutter Demo Home Page',
@@ -231,28 +234,38 @@ class _MyHomePageState extends State<MyHomePage> {
   final SupabaseClient supabase = Supabase.instance.client;
   late BannerAd _bannerAd;
 
-  final String adUnitId = kReleaseMode
-      ? dotenv.env['RELEASE_AD_UNIT_ID']!
-      : dotenv.env['DEV_AD_UNIT_ID']!;
+  // TODO: privateなenvファイルに広告のIDの環境変数を実装する
+  final String androidAdUnitId =
+      UniversalPlatform.isWeb ? "" : dotenv.env['ANDROID_AD_UNIT_ID'] ?? '';
+  final String iosAdUnitId =
+      UniversalPlatform.isWeb ? "" : dotenv.env['IOS_AD_UNIT_ID'] ?? '';
+  // final String adUnitId = kReleaseMode
+  //     ? dotenv.env['RELEASE_AD_UNIT_ID']!
+  //     : dotenv.env['DEV_AD_UNIT_ID']!;
+  // final String adUnitId = 'ca-app-pub-3940256099942544/2934735716';
+  // androidのテスト用のID
+  // ca-app-pub-3940256099942544/6300978111
 
   @override
   void initState() {
     super.initState();
-    _bannerAd = BannerAd(
-      adUnitId: adUnitId,
-      size: AdSize.banner,
-      request: const AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (Ad ad) {
-          print('バナー広告がロードされました。');
-        },
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          print('バナー広告のロードに失敗しました: $error');
-          ad.dispose();
-        },
-      ),
-    );
-    _bannerAd.load();
+    if (!UniversalPlatform.isWeb) {
+      _bannerAd = BannerAd(
+        adUnitId: UniversalPlatform.isAndroid ? androidAdUnitId : iosAdUnitId,
+        size: AdSize.banner,
+        request: const AdRequest(),
+        listener: BannerAdListener(
+          onAdLoaded: (Ad ad) {
+            print('バナー広告がロードされました。');
+          },
+          onAdFailedToLoad: (Ad ad, LoadAdError error) {
+            print('バナー広告のロードに失敗しました: $error');
+            ad.dispose();
+          },
+        ),
+      );
+      _bannerAd.load();
+    }
   }
 
   @override
@@ -277,10 +290,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: const TopScreen(),
       bottomSheet: // バナー広告を表示するためのウィジェット
-          Container(
-            height: _bannerAd.size.height.toDouble(),
-            child: AdWidget(ad: _bannerAd),
-          ),
+          UniversalPlatform.isWeb
+              ? SizedBox()
+              : Container(
+                  height: _bannerAd.size.height.toDouble(),
+                  child: AdWidget(ad: _bannerAd),
+                ),
     );
   }
 }

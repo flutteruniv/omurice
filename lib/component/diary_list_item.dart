@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../model/diary_data_model.dart';
 
 class DiaryListItem extends StatelessWidget {
   const DiaryListItem({
@@ -18,7 +17,8 @@ class DiaryListItem extends StatelessWidget {
   final String diaryText;
   final bool isBookmarked;
   final VoidCallback onTapBookmark;
-
+  final String defaultAvatarUrl =
+      "https://4.bp.blogspot.com/-pDC6umJH8H4/UbVvXL3PPEI/AAAAAAAAUwE/7IzHI_SmA40/s800/vacation_sunset.png";
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -30,7 +30,8 @@ class DiaryListItem extends StatelessWidget {
               children: [
                 avatarUrl != null
                     ? CircleAvatar(
-                        backgroundImage: NetworkImage(avatarUrl!),
+                        backgroundImage: NetworkImage(
+                            avatarUrl != "" ? avatarUrl! : defaultAvatarUrl),
                       )
                     : CircleAvatar(
                         backgroundColor: Colors.grey,
@@ -89,14 +90,14 @@ class DiaryListItem extends StatelessWidget {
 
 Widget getChip(int kind) {
   switch (kind) {
-    case 0:
+    case 1:
       {
         return Chip(
           label: const Text("五感"),
           backgroundColor: Colors.red[100],
         );
       }
-    case 1:
+    case 3:
       {
         return Chip(
           label: const Text("過去"),
@@ -110,14 +111,14 @@ Widget getChip(int kind) {
           backgroundColor: Colors.amber[100],
         );
       }
-    case 3:
+    case 4:
       {
         return Chip(
           label: const Text("経験"),
           backgroundColor: Colors.purple[100],
         );
       }
-    case 4:
+    case 5:
       {
         return Chip(
           label: const Text("自由"),

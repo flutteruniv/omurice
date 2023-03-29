@@ -89,29 +89,23 @@ class ExplainListItem extends StatelessWidget {
                   )),
         );
       },
-      child: SizedBox(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(explainName),
-                ),
-              ],
-            ),
-            Wrap(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Expanded(child: Text(explain)),
-                )
-              ],
-            )
-          ]),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        child: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(explainName),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(explain),
+          )
+        ]),
       ),
     );
   }
