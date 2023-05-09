@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/pages/nav_host.dart';
+import 'package:omurice/ui/pages/nav_host.dart';
 
 class TopScreen extends StatelessWidget {
   const TopScreen({

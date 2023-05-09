@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:omurice/pages/diary_screen.dart';
+import 'package:omurice/ui/pages/diary_screen.dart';
 
 enum DiaryKind {
   /* 五感日記 */

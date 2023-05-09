@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/pages/top_screen.dart';
+import 'package:omurice/ui/pages/top_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +16,7 @@ Future<void> main() async {
     url: dotenv.env['SUPABASE_URL'] ?? "",
     anonKey: dotenv.env['SUPABASE_KEY'] ?? "",
   );
-  runApp(MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
