@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/component/diary_list.dart';
-import 'package:omurice/component/search_widget.dart';
+import 'package:omurice/ui/component/diary_list.dart';
+import 'package:omurice/ui/component/search_widget.dart';
 
 class DiaryViewScreen extends StatelessWidget {
   const DiaryViewScreen({Key? key}) : super(key: key);

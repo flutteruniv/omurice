@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:omurice/utils/constants.dart';
-import '../component/user_profile_headline.dart';
 import 'package:omurice/model/user_data_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'component/user_profile_headline.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({

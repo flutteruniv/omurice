@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/component/diary_list_item.dart';
+import 'package:omurice/ui/component/diary_list_item.dart';
 import 'package:omurice/utils/constants.dart';
-import '../model/diary_data_model.dart';
+import '../../model/diary_data_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DiaryList extends StatefulWidget {

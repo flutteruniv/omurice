@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/component/service_list_item.dart';
+import 'package:omurice/ui/component/service_list_item.dart';
 import 'package:omurice/utils/constants.dart';
-import '../model/service_data_model.dart';
+import '../../model/service_data_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ServiceList extends StatefulWidget {
