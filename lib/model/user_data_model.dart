@@ -2,7 +2,7 @@ class UserData {
   const UserData({
     required this.userId,
     required this.userName,
-    this.avatarUrl,
+    required this.avatarUrl,
     required this.age,
     required this.profession,
     required this.disability,
@@ -13,7 +13,7 @@ class UserData {
   });
   final String userId;
   final String userName;
-  final String? avatarUrl;
+  final String avatarUrl;
   final String age;
   final String profession;
   final String disability;

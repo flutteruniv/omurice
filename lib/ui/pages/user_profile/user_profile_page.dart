@@ -1,90 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:omurice/utils/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:omurice/model/user_data_model.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:omurice/ui/pages/user_profile/user_profile_notifier.dart';
 import 'component/user_profile_headline.dart';
 
-class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<UserProfileScreen> createState() => _UserProfileScreenState();
-}
-
-class _UserProfileScreenState extends State<UserProfileScreen> {
-  bool _isEdit = false;
-  var profileData = const UserData(
-      userId: '',
-      userName: '',
-      avatarUrl: null,
-      age: '非公開',
-      profession: '',
-      disability: '',
-      message: '',
-      selfIntroduce: '',
-      follow: [],
-      bookmark: []);
+class UserProfileScreen extends ConsumerWidget {
+  const UserProfileScreen({Key? key}) : super(key: key);
   final String defaultAvatarUrl =
       "https://4.bp.blogspot.com/-pDC6umJH8H4/UbVvXL3PPEI/AAAAAAAAUwE/7IzHI_SmA40/s800/vacation_sunset.png";
 
-  final supabase = Supabase.instance.client;
-  Future<UserData> getProfile() async {
-    await refreshSession();
-    final currentUserID = supabase.auth.currentUser!.id;
-    var data =
-        await supabase.from('user').select().eq('user_id', currentUserID);
-    if (data == null || data.isEmpty) {
-      await supabase.from('user').insert({'user_id': currentUserID});
-    }
-    data = await supabase
-        .from('user')
-        .select()
-        .eq('user_id', currentUserID)
-        .single();
-    return UserData(
-        userId: data['user_id'],
-        userName: data['user_name'],
-        avatarUrl: data['avatar_url'],
-        age: data['age'],
-        profession: data['profession'],
-        disability: data['disability'],
-        message: data['message'],
-        selfIntroduce: data['self_introduce'],
-        follow: data['follow'],
-        bookmark: data['bookmark']);
-  }
-
   @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  Future<void> loadData() async {
-    final dataTmp = await getProfile();
-    setState(() {
-      profileData = dataTmp;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final double deviceHeight = MediaQuery.of(context).size.height;
     final double deviceWidth = MediaQuery.of(context).size.width;
-    final userNameController =
-        TextEditingController(text: profileData.userName);
-    final avatarUrlController =
-        TextEditingController(text: profileData.avatarUrl);
-    final ageController = TextEditingController(text: profileData.age);
-    final professionController =
-        TextEditingController(text: profileData.profession);
-    final disabilityController =
-        TextEditingController(text: profileData.disability);
-    final messageController = TextEditingController(text: profileData.message);
-    final selfIntroduceController =
-        TextEditingController(text: profileData.selfIntroduce);
+
+    final profileDataConfig = ref.watch(fechProfileFutureProvider);
+
+    final notifier = ref.watch(userProfileNotifierProvider.notifier);
+    final state = ref.watch(userProfileNotifierProvider);
+
     return Scaffold(
         body: SingleChildScrollView(
       child: Padding(
@@ -101,13 +35,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          CircleAvatar(
-                            radius: deviceWidth * 0.1,
-                            backgroundImage: NetworkImage(
-                                profileData.avatarUrl == ''
-                                    ? defaultAvatarUrl
-                                    : profileData.avatarUrl ??
-                                        defaultAvatarUrl),
+                          profileDataConfig.when(
+                            loading: () => const CircularProgressIndicator(),
+                            error: (err, stack) => Text('Error: $err'),
+                            data: (config) {
+                              return CircleAvatar(
+                                radius: deviceWidth * 0.1,
+                                backgroundImage: NetworkImage(
+                                    config.avatarUrl == ''
+                                        ? defaultAvatarUrl
+                                        : config.avatarUrl),
+                              );
+                            },
                           ),
                           SizedBox(
                             width: deviceWidth * 0.1,
@@ -121,64 +60,87 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(20),
                                   child: Center(
-                                    child: _isEdit == true
+                                    child: state.isEdit == true
                                         ? TextFormField(
-                                            controller: messageController,
+                                            controller:
+                                                notifier.messageController,
                                           )
-                                        : Text(profileData.message),
+                                        : profileDataConfig.when(
+                                            loading: () =>
+                                                const CircularProgressIndicator(),
+                                            error: (err, stack) =>
+                                                Text('Error: $err'),
+                                            data: (config) {
+                                              return Text(config.message);
+                                            },
+                                          ),
                                   ),
                                 )),
                           )
                         ],
                       ),
-                      // SizedBox(height: deviceHeight * 0.03),
-                      // Row(
-                      //   children: [
-                      //     const Text("フォロー >"),
-                      //     SizedBox(width: deviceWidth * 0.03),
-                      //     const Text("ブックマーク >"),
-                      //   ],
-                      // ),
                       SizedBox(height: deviceHeight * 0.03),
                       userProfileHeadline("自己紹介"),
-                      _isEdit == true
-                          ? TextFormField(controller: selfIntroduceController)
-                          : Text(profileData.selfIntroduce),
+                      state.isEdit == true
+                          ? TextFormField(
+                              controller: notifier.selfIntroduceController)
+                          : profileDataConfig.when(
+                              loading: () => const CircularProgressIndicator(),
+                              error: (err, stack) => Text('Error: $err'),
+                              data: (config) {
+                                return Text(config.selfIntroduce);
+                              },
+                            ),
                       SizedBox(height: deviceHeight * 0.03),
                       userProfileHeadline("基礎情報"),
-                      _userBasicInfoListItem(
-                          'ニックネーム', profileData.userName, userNameController),
-                      _userBasicInfoListItem(
-                          '年齢', profileData.age.toString(), ageController),
-                      _userBasicInfoListItem(
-                          '職業', profileData.profession, professionController),
-                      _userBasicInfoListItem('病気・障害', profileData.disability,
-                          disabilityController),
+                      profileDataConfig.when(
+                        loading: () => const CircularProgressIndicator(),
+                        error: (err, stack) => Text('Error: $err'),
+                        data: (config) {
+                          return Column(
+                            children: [
+                              _userBasicInfoListItem('ニックネーム', config.userName,
+                                  notifier.userNameController, state.isEdit),
+                              _userBasicInfoListItem(
+                                  '年齢',
+                                  config.age.toString(),
+                                  notifier.ageController,
+                                  state.isEdit),
+                              _userBasicInfoListItem('職業', config.profession,
+                                  notifier.professionController, state.isEdit),
+                              _userBasicInfoListItem('病気・障害', config.disability,
+                                  notifier.disabilityController, state.isEdit),
+                            ],
+                          );
+                        },
+                      ),
                       SizedBox(height: deviceHeight * 0.03),
-                      _isEdit == true
+                      state.isEdit == true
                           ? ElevatedButton(
                               onPressed: () async {
-                                await refreshSession();
-                                await supabase.from('user').update({
-                                  'user_name': userNameController.text,
-                                  'avatar_url': avatarUrlController.text,
-                                  'age': ageController.text,
-                                  'profession': professionController.text,
-                                  'disability': disabilityController.text,
-                                  'message': messageController.text,
-                                  'self_introduce': selfIntroduceController.text
-                                }).match({'user_id': profileData.userId});
-                                loadData();
-                                setState(() {
-                                  _isEdit = false;
-                                });
+                                final inputData = UserData(
+                                    userId: "",
+                                    userName: notifier.userNameController.text,
+                                    avatarUrl:
+                                        notifier.avatarUrlController.text,
+                                    age: notifier.ageController.text,
+                                    profession:
+                                        notifier.professionController.text,
+                                    disability:
+                                        notifier.disabilityController.text,
+                                    message: notifier.messageController.text,
+                                    selfIntroduce:
+                                        notifier.selfIntroduceController.text,
+                                    follow: [],
+                                    bookmark: []);
+                                ref.watch(
+                                    updateProfileFutureProvider(inputData));
+                                notifier.offIsEdit();
                               },
                               child: const Text("完了"))
                           : ElevatedButton(
                               onPressed: () {
-                                setState(() {
-                                  _isEdit = true;
-                                });
+                                notifier.onIsEdit();
                               },
                               child: const Text("編集"))
                     ],
@@ -188,8 +150,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     ));
   }
 
-  Widget _userBasicInfoListItem(
-      String label, String value, TextEditingController controller) {
+  Widget _userBasicInfoListItem(String label, String value,
+      TextEditingController controller, bool isEdit) {
     return Container(
       height: 40,
       decoration: const BoxDecoration(
@@ -201,7 +163,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label),
-          _isEdit == true
+          isEdit == true
               ? Expanded(
                   child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
