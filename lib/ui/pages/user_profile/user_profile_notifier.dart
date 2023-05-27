@@ -5,10 +5,9 @@ import 'package:omurice/ui/pages/user_profile/user_profile_state.dart';
 import '../../../model/user_data_model.dart';
 import '../../../repository/profile_repository.dart';
 
-final userProfileNotifierProvider =
-    StateNotifierProvider<UserProfileNotifier, UserProfileState>(
-  UserProfileNotifier.new,
-);
+final userProfileNotifierProvider = StateNotifierProvider.autoDispose
+    .family<UserProfileNotifier, UserProfileState, UserData>(
+        (ref, profileData) => UserProfileNotifier(ref, profileData));
 
 final fechProfileFutureProvider = FutureProvider<UserData>((ref) async {
   final profileDataCongfig =
@@ -29,9 +28,19 @@ final updateProfileFutureProvider =
 });
 
 class UserProfileNotifier extends StateNotifier<UserProfileState> {
-  UserProfileNotifier(this.ref) : super(const UserProfileState());
+  UserProfileNotifier(this.ref, this.profileData)
+      : super(const UserProfileState()) {
+    userNameController.text = profileData.userName;
+    avatarUrlController.text = profileData.avatarUrl;
+    ageController.text = profileData.age;
+    professionController.text = profileData.profession;
+    disabilityController.text = profileData.disability;
+    messageController.text = profileData.message;
+    selfIntroduceController.text = profileData.selfIntroduce;
+  }
 
   final Ref ref;
+  final UserData profileData;
 
   final userNameController = TextEditingController();
   final avatarUrlController = TextEditingController();
